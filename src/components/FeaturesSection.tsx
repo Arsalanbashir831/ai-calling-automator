@@ -12,7 +12,7 @@ const FeaturesSection = () => {
       description: "Our AI creates hyper-realistic, emotionally intelligent conversations that adapt in real-time to customer responses.",
       gradient: "from-blue-500/10 via-indigo-400/10 to-purple-500/10",
       iconBg: "bg-gradient-to-br from-blue-500 to-indigo-600",
-      slideDirection: "left"
+      animation: "slide-in-left" as const
     },
     {
       icon: <Shield className="h-10 w-10 text-indigo-400" />,
@@ -20,7 +20,7 @@ const FeaturesSection = () => {
       description: "AI algorithms determine the perfect timing for follow-ups, automatically sending personalized messages across channels.",
       gradient: "from-indigo-500/10 via-purple-400/10 to-pink-500/10",
       iconBg: "bg-gradient-to-br from-indigo-500 to-purple-600",
-      slideDirection: "right"
+      animation: "slide-in-right" as const
     },
     {
       icon: <BarChart3 className="h-10 w-10 text-purple-400" />,
@@ -28,7 +28,7 @@ const FeaturesSection = () => {
       description: "Advanced data visualization with predictive intelligence that transforms conversation data into actionable strategies.",
       gradient: "from-purple-500/10 via-pink-400/10 to-red-500/10",
       iconBg: "bg-gradient-to-br from-purple-500 to-pink-600",
-      slideDirection: "left"
+      animation: "slide-in-left" as const
     },
     {
       icon: <Database className="h-10 w-10 text-pink-400" />,
@@ -36,7 +36,7 @@ const FeaturesSection = () => {
       description: "Design sophisticated multi-dimensional campaigns with our neural network personalization algorithms.",
       gradient: "from-pink-500/10 via-red-400/10 to-orange-500/10", 
       iconBg: "bg-gradient-to-br from-pink-500 to-red-600",
-      slideDirection: "right"
+      animation: "slide-in-right" as const
     },
     {
       icon: <Rocket className="h-10 w-10 text-red-400" />,
@@ -44,7 +44,7 @@ const FeaturesSection = () => {
       description: "Enterprise-grade connections with mission-critical platforms through our advanced API ecosystem and secure connectors.",
       gradient: "from-blue-500/10 via-cyan-400/10 to-teal-500/10",
       iconBg: "bg-gradient-to-br from-blue-500 to-cyan-600",
-      slideDirection: "left"
+      animation: "slide-in-left" as const
     },
     {
       icon: <Cpu className="h-10 w-10 text-cyan-400" />,
@@ -52,7 +52,7 @@ const FeaturesSection = () => {
       description: "Self-improving AI that evolves with each interaction, continuously optimizing communication strategies and outcomes.",
       gradient: "from-cyan-500/10 via-teal-400/10 to-emerald-500/10",
       iconBg: "bg-gradient-to-br from-cyan-500 to-teal-600",
-      slideDirection: "right"
+      animation: "slide-in-right" as const
     },
   ];
 
@@ -112,7 +112,7 @@ const FeaturesSection = () => {
           {features.map((feature, index) => (
             <ScrollReveal 
               key={index} 
-              animation={`slide-in-${feature.slideDirection}`}
+              animation={feature.animation}
               delay={index * 100}
               className="h-full"
             >
