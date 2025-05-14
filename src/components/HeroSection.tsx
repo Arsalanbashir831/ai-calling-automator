@@ -23,7 +23,7 @@ const HeroSection = () => {
             <Card className="glass-effect overflow-hidden">
               <div className="p-4">
                 <div className="mb-2 flex justify-between items-center">
-                  <h5 className="text-sm font-medium">Income & Expenses</h5>
+                  <h5 className="text-sm font-medium">Lead Generation</h5>
                   <span className="text-muted-foreground">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M8 3.5V12.5M8 3.5L4 7.5M8 3.5L12 7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
