@@ -3,7 +3,7 @@ import { BarChart3, LineChart } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import ScrollReveal from "@/components/ScrollReveal";
 const HeroSection = () => {
-  return <section id="hero" className="pt-20 pb-16 md:pt-28 md:pb-24 relative overflow-hidden">
+  return <section id="hero" className="pt-20 pb-16 md:pt-28 md:pb-20 relative overflow-hidden">
       {/* Gradient background elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,rgba(29,78,216,0.15),transparent_50%)]"></div>

@@ -1,41 +1,33 @@
-
 import { Database, CalendarDays, PhoneCall, BarChart3 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import ScrollReveal from "@/components/ScrollReveal";
 import { useRef, useState, useEffect } from "react";
-
 const HowItWorksSection = () => {
-  const steps = [
-    {
-      number: "01",
-      title: "Upload Lead Data",
-      description: "Upload your CSV lead files through our enterprise-grade data pipeline. Our system intelligently processes contact information, segments audiences, and prepares your campaign.",
-      icon: <Database className="w-10 h-10 text-blue-400" />,
-      gradient: "from-blue-500/80 to-indigo-600/80"
-    },
-    {
-      number: "02",
-      title: "Configure Call Schedule",
-      description: "Set your outbound and inbound call preferences, time zones, call frequency, and follow-up parameters through our intuitive scheduling interface.",
-      icon: <CalendarDays className="w-10 h-10 text-indigo-400" />,
-      gradient: "from-indigo-500/80 to-purple-600/80"
-    },
-    {
-      number: "03",
-      title: "Autonomous Calls",
-      description: "Our AI engine automatically initiates calls to leads, handling conversations with natural voice, adapting to responses, and qualifying prospects in real-time.",
-      icon: <PhoneCall className="w-10 h-10 text-purple-400" />,
-      gradient: "from-purple-500/80 to-pink-600/80"
-    },
-    {
-      number: "04",
-      title: "Analytics Dashboard",
-      description: "Access comprehensive call analytics, conversion metrics, call recordings, and AI-generated insights through our executive dashboard.",
-      icon: <BarChart3 className="w-10 h-10 text-pink-400" />,
-      gradient: "from-pink-500/80 to-red-600/80"
-    },
-  ];
-
+  const steps = [{
+    number: "01",
+    title: "Upload Lead Data",
+    description: "Upload your CSV lead files through our enterprise-grade data pipeline. Our system intelligently processes contact information, segments audiences, and prepares your campaign.",
+    icon: <Database className="w-10 h-10 text-blue-400" />,
+    gradient: "from-blue-500/80 to-indigo-600/80"
+  }, {
+    number: "02",
+    title: "Configure Call Schedule",
+    description: "Set your outbound and inbound call preferences, time zones, call frequency, and follow-up parameters through our intuitive scheduling interface.",
+    icon: <CalendarDays className="w-10 h-10 text-indigo-400" />,
+    gradient: "from-indigo-500/80 to-purple-600/80"
+  }, {
+    number: "03",
+    title: "Autonomous Calls",
+    description: "Our AI engine automatically initiates calls to leads, handling conversations with natural voice, adapting to responses, and qualifying prospects in real-time.",
+    icon: <PhoneCall className="w-10 h-10 text-purple-400" />,
+    gradient: "from-purple-500/80 to-pink-600/80"
+  }, {
+    number: "04",
+    title: "Analytics Dashboard",
+    description: "Access comprehensive call analytics, conversion metrics, call recordings, and AI-generated insights through our executive dashboard.",
+    icon: <BarChart3 className="w-10 h-10 text-pink-400" />,
+    gradient: "from-pink-500/80 to-red-600/80"
+  }];
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
 
@@ -43,29 +35,21 @@ const HowItWorksSection = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current) return;
-      
       const sectionTop = sectionRef.current.getBoundingClientRect().top;
       const sectionHeight = sectionRef.current.offsetHeight;
       const windowHeight = window.innerHeight;
-      
+
       // Calculate which step should be active based on scroll position
       const scrollProgress = (windowHeight - sectionTop) / (sectionHeight + windowHeight);
-      const stepIndex = Math.min(
-        Math.max(Math.floor(scrollProgress * 6) - 1, 0), 
-        steps.length - 1
-      );
-      
+      const stepIndex = Math.min(Math.max(Math.floor(scrollProgress * 6) - 1, 0), steps.length - 1);
       setActiveStep(stepIndex);
     };
-
     window.addEventListener('scroll', handleScroll);
     handleScroll(); // Initial check
-    
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, [steps.length]);
-
-  return (
-    <section id="how-it-works" className="py-28 relative overflow-hidden" ref={sectionRef}>
+  return <section id="how-it-works" ref={sectionRef} className="py-20 relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(29,78,216,0.07),transparent_70%)]"></div>
@@ -94,24 +78,13 @@ const HowItWorksSection = () => {
           <div className="relative">
             <div className="absolute top-0 bottom-0 left-[42px] w-0.5 bg-gradient-to-b from-primary/30 via-secondary/30 to-primary/30"></div>
             
-            {steps.map((step, index) => (
-              <ScrollReveal
-                key={index}
-                animation="slide-up"
-                delay={index * 100}
-                className="relative"
-              >
-                <div 
-                  className={`flex mb-16 last:mb-0 transition-all duration-500 ${activeStep >= index ? 'opacity-100' : 'opacity-40'}`}
-                >
+            {steps.map((step, index) => <ScrollReveal key={index} animation="slide-up" delay={index * 100} className="relative">
+                <div className={`flex mb-16 last:mb-0 transition-all duration-500 ${activeStep >= index ? 'opacity-100' : 'opacity-40'}`}>
                   {/* Step Number Circle */}
                   <div className="relative z-10">
                     <div className={`
                       w-[85px] h-[85px] rounded-full flex items-center justify-center text-2xl font-bold
-                      ${activeStep >= index 
-                        ? `bg-gradient-to-br ${step.gradient} neo-glow text-white` 
-                        : 'bg-black/40 border border-white/10 text-white/50'
-                      }
+                      ${activeStep >= index ? `bg-gradient-to-br ${step.gradient} neo-glow text-white` : 'bg-black/40 border border-white/10 text-white/50'}
                       transition-all duration-700
                     `}>
                       {step.number}
@@ -128,8 +101,7 @@ const HowItWorksSection = () => {
                     </p>
                   </div>
                 </div>
-              </ScrollReveal>
-            ))}
+              </ScrollReveal>)}
           </div>
           
           {/* Right side: Interactive Dashboard Preview */}
@@ -248,12 +220,24 @@ const HowItWorksSection = () => {
                           </div>
                         </div>
                         <div className="mt-3 h-16 w-full bg-black/40 rounded-md flex items-end overflow-hidden px-1">
-                          <div className="h-2 w-1/6 bg-purple-500/50 mx-0.5 rounded-sm animate-pulse" style={{animationDelay: "0ms"}}></div>
-                          <div className="h-4 w-1/6 bg-purple-500/50 mx-0.5 rounded-sm animate-pulse" style={{animationDelay: "100ms"}}></div>
-                          <div className="h-8 w-1/6 bg-purple-500/50 mx-0.5 rounded-sm animate-pulse" style={{animationDelay: "200ms"}}></div>
-                          <div className="h-10 w-1/6 bg-purple-500/50 mx-0.5 rounded-sm animate-pulse" style={{animationDelay: "300ms"}}></div>
-                          <div className="h-6 w-1/6 bg-purple-500/50 mx-0.5 rounded-sm animate-pulse" style={{animationDelay: "400ms"}}></div>
-                          <div className="h-3 w-1/6 bg-purple-500/50 mx-0.5 rounded-sm animate-pulse" style={{animationDelay: "500ms"}}></div>
+                          <div className="h-2 w-1/6 bg-purple-500/50 mx-0.5 rounded-sm animate-pulse" style={{
+                          animationDelay: "0ms"
+                        }}></div>
+                          <div className="h-4 w-1/6 bg-purple-500/50 mx-0.5 rounded-sm animate-pulse" style={{
+                          animationDelay: "100ms"
+                        }}></div>
+                          <div className="h-8 w-1/6 bg-purple-500/50 mx-0.5 rounded-sm animate-pulse" style={{
+                          animationDelay: "200ms"
+                        }}></div>
+                          <div className="h-10 w-1/6 bg-purple-500/50 mx-0.5 rounded-sm animate-pulse" style={{
+                          animationDelay: "300ms"
+                        }}></div>
+                          <div className="h-6 w-1/6 bg-purple-500/50 mx-0.5 rounded-sm animate-pulse" style={{
+                          animationDelay: "400ms"
+                        }}></div>
+                          <div className="h-3 w-1/6 bg-purple-500/50 mx-0.5 rounded-sm animate-pulse" style={{
+                          animationDelay: "500ms"
+                        }}></div>
                         </div>
                       </div>
                       
@@ -338,19 +322,8 @@ const HowItWorksSection = () => {
                           
                           {/* Line chart overlay */}
                           <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                            <path 
-                              d="M0,55 L14.28,35 L28.56,45 L42.84,25 L57.12,40 L71.4,15 L85.68,30 L100,30" 
-                              fill="none" 
-                              stroke="#ec4899" 
-                              strokeWidth="1.5"
-                            />
-                            <path 
-                              d="M0,55 L14.28,35 L28.56,45 L42.84,25 L57.12,40 L71.4,15 L85.68,30 L100,30" 
-                              fill="none" 
-                              stroke="url(#gradient)" 
-                              strokeWidth="1.5"
-                              strokeDasharray="1,1"
-                            />
+                            <path d="M0,55 L14.28,35 L28.56,45 L42.84,25 L57.12,40 L71.4,15 L85.68,30 L100,30" fill="none" stroke="#ec4899" strokeWidth="1.5" />
+                            <path d="M0,55 L14.28,35 L28.56,45 L42.84,25 L57.12,40 L71.4,15 L85.68,30 L100,30" fill="none" stroke="url(#gradient)" strokeWidth="1.5" strokeDasharray="1,1" />
                             <defs>
                               <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
                                 <stop offset="0%" stopColor="#ec4899" stopOpacity="0.5" />
@@ -385,8 +358,6 @@ const HowItWorksSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HowItWorksSection;
