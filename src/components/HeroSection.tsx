@@ -88,7 +88,7 @@ const HeroSection = () => {
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
               <div className="relative flex items-center w-full sm:w-auto max-w-md">
                 <input type="email" placeholder="Enter your email address" className="w-full px-4 py-3 rounded-full bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-primary/50 pr-32" />
-                <Button className="absolute right-1 h-10 rounded-full bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-black font-medium">
+                <Button className="absolute right-1 h-10 rounded-full bg-gradient-to-r from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white font-medium">
                   Get Started
                 </Button>
               </div>
