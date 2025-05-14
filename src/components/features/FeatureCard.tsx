@@ -23,7 +23,7 @@ const FeatureCard = ({ title, description, icon, iconBg, animation, index }: Fea
       className="h-full"
     >
       <Card 
-        className="relative overflow-hidden rounded-xl bg-white/[0.03] border border-white/10 shadow-xl hover:shadow-2xl transition-all duration-500 h-full flex flex-col"
+        className="relative overflow-hidden rounded-xl bg-white/[0.03] border border-white/10 shadow-xl transition-all duration-500 h-full flex flex-col hover:shadow-2xl hover:shadow-primary/20"
       >
         <CardContent className="relative p-8 h-full flex flex-col z-10">
           <div className="flex items-center">
@@ -49,6 +49,12 @@ const FeatureCard = ({ title, description, icon, iconBg, animation, index }: Fea
           {/* Card corner decoration */}
           <div className="absolute top-0 right-0 w-20 h-20 overflow-hidden">
             <div className="absolute top-0 right-0 w-[120px] h-[3px] bg-gradient-to-r from-transparent via-primary to-transparent transform rotate-45 translate-x-[40px] translate-y-[58px]"></div>
+          </div>
+          
+          {/* Glow effect on hover */}
+          <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/20 to-secondary/20 blur-xl"></div>
+            <div className="absolute inset-0 -z-10 border-2 border-primary/20 rounded-xl"></div>
           </div>
         </CardContent>
       </Card>

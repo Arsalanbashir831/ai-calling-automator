@@ -3,7 +3,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 
 const SectionHeader = () => {
   return (
-    <ScrollReveal animation="fade-in">
+    <ScrollReveal animation="slide-up" delay={100}>
       <div className="text-center max-w-3xl mx-auto mb-16">
         <div className="inline-flex items-center justify-center px-4 py-1.5 space-x-2 rounded-full neo-frost text-xs font-medium uppercase tracking-wider text-blue-400">
           <span className="flex h-2 w-2 rounded-full bg-blue-500"></span>

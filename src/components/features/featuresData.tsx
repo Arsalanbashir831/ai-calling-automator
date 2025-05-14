@@ -35,7 +35,7 @@ export const features: Feature[] = [
     icon: <PhoneCall className="h-10 w-10 text-purple-400" />,
     gradient: "from-purple-500/10 via-pink-400/10 to-red-500/10",
     iconBg: "bg-gradient-to-br from-purple-500 to-pink-600",
-    animation: "slide-in-left"
+    animation: "slide-up"
   },
   {
     title: "Analytics Dashboard",
@@ -51,7 +51,7 @@ export const features: Feature[] = [
     icon: <Activity className="h-10 w-10 text-red-400" />,
     gradient: "from-blue-500/10 via-cyan-400/10 to-teal-500/10",
     iconBg: "bg-gradient-to-br from-blue-500 to-cyan-600",
-    animation: "slide-in-left"
+    animation: "fade-in"
   },
   {
     title: "Conversation Intelligence",
@@ -59,6 +59,6 @@ export const features: Feature[] = [
     icon: <MessageSquare className="h-10 w-10 text-cyan-400" />,
     gradient: "from-cyan-500/10 via-teal-400/10 to-emerald-500/10",
     iconBg: "bg-gradient-to-br from-cyan-500 to-teal-600",
-    animation: "slide-in-right"
+    animation: "scale-in"
   },
 ];

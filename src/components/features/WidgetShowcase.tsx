@@ -5,7 +5,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 const WidgetShowcase = () => {
   return (
     <div className="mt-24 relative">
-      <ScrollReveal animation="fade-in">
+      <ScrollReveal animation="scale-in">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h3 className="text-3xl font-bold mb-6">Complete AI Call Platform</h3>
           <p className="text-muted-foreground">
@@ -15,8 +15,8 @@ const WidgetShowcase = () => {
       </ScrollReveal>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <ScrollReveal animation="slide-in-left" className="col-span-1">
-          <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 shadow-xl relative overflow-hidden">
+        <ScrollReveal animation="slide-in-left" delay={200} className="col-span-1">
+          <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 shadow-xl relative overflow-hidden hover:shadow-primary/20 hover:shadow-2xl transition-all duration-300">
             <h4 className="text-lg font-medium mb-3 flex items-center">
               <Users className="h-5 w-5 mr-2 text-blue-400" />
               Lead Management
@@ -38,8 +38,8 @@ const WidgetShowcase = () => {
           </div>
         </ScrollReveal>
         
-        <ScrollReveal animation="slide-up" className="col-span-1">
-          <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 shadow-xl relative overflow-hidden">
+        <ScrollReveal animation="fade-in" delay={300} className="col-span-1">
+          <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 shadow-xl relative overflow-hidden hover:shadow-primary/20 hover:shadow-2xl transition-all duration-300">
             <h4 className="text-lg font-medium mb-3 flex items-center">
               <PhoneCall className="h-5 w-5 mr-2 text-indigo-400" />
               AI Call Activity
@@ -68,8 +68,8 @@ const WidgetShowcase = () => {
           </div>
         </ScrollReveal>
         
-        <ScrollReveal animation="slide-in-right" className="col-span-1">
-          <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 shadow-xl relative overflow-hidden">
+        <ScrollReveal animation="slide-in-right" delay={400} className="col-span-1">
+          <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 shadow-xl relative overflow-hidden hover:shadow-primary/20 hover:shadow-2xl transition-all duration-300">
             <h4 className="text-lg font-medium mb-3 flex items-center">
               <Briefcase className="h-5 w-5 mr-2 text-purple-400" />
               Campaign Performance
