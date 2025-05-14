@@ -1,10 +1,12 @@
 
 import { Button } from "@/components/ui/button";
-import { Phone, Users, BarChart3, Lock } from "lucide-react";
+import { BarChart3, LineChart } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import ScrollReveal from "@/components/ScrollReveal";
 
 const HeroSection = () => {
   return (
-    <section id="hero" className="pt-32 pb-16 md:pt-40 md:pb-24 relative overflow-hidden">
+    <section id="hero" className="pt-20 pb-16 md:pt-28 md:pb-24 relative overflow-hidden">
       {/* Gradient background elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,rgba(29,78,216,0.15),transparent_50%)]"></div>
@@ -12,139 +14,176 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDIwIDAgTCAwIDAgTCAwIDIwIiBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')]"></div>
       </div>
       
-      <div className="container px-4 md:px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row gap-12 items-center">
-          <div className="flex-1 space-y-8 animate-fade-in">
-            <div className="inline-flex items-center justify-center px-4 py-1.5 space-x-2 rounded-full neo-frost text-xs font-medium uppercase tracking-wider text-blue-400">
-              <span className="flex h-2 w-2 rounded-full bg-blue-500"></span>
-              <span>Enterprise AI Communication</span>
-            </div>
-            
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tighter">
-              Next-Generation <br className="hidden md:block" /><span className="gradient-text">AI-Powered Calling</span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-muted-foreground max-w-[600px]">
-              Transform enterprise communication with autonomous AI agents that deliver personalized conversations, intelligent follow-ups, and comprehensive analytics at unprecedented scale.
-            </p>
-            
-            <div className="flex flex-wrap gap-5 pt-4">
-              <Button size="lg" className="text-md h-14 px-8 neo-glow">
-                Launch Enterprise Solution
-              </Button>
-              <Button size="lg" variant="outline" className="text-md h-14 px-6 border-white/10 bg-white/5 hover:bg-white/10">
-                Watch Product Demo
-              </Button>
-            </div>
-            
-            <div className="flex flex-wrap items-center gap-6 pt-4 text-muted-foreground">
-              <div className="flex items-center gap-2 bg-card/40 backdrop-blur-sm px-3 py-2 rounded-lg">
-                <Phone size={16} className="text-blue-400" />
-                <span className="text-sm">Neural Voice Engine</span>
-              </div>
-              <div className="flex items-center gap-2 bg-card/40 backdrop-blur-sm px-3 py-2 rounded-lg">
-                <Users size={16} className="text-blue-400" />
-                <span className="text-sm">Adaptive Response AI</span>
-              </div>
-              <div className="flex items-center gap-2 bg-card/40 backdrop-blur-sm px-3 py-2 rounded-lg">
-                <BarChart3 size={16} className="text-blue-400" />
-                <span className="text-sm">Predictive Analytics</span>
-              </div>
-              <div className="flex items-center gap-2 bg-card/40 backdrop-blur-sm px-3 py-2 rounded-lg">
-                <Lock size={16} className="text-blue-400" />
-                <span className="text-sm">Enterprise-Grade Security</span>
-              </div>
-            </div>
-          </div>
-          
-          <div className="flex-1 relative">
-            <div className="relative w-full h-[500px] animate-float p-4">
-              {/* Orbital system */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-white/5 animate-spin" style={{animationDuration: '40s'}}></div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-white/10 animate-spin" style={{animationDuration: '30s'}}></div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full border border-white/20 animate-spin" style={{animationDuration: '20s'}}></div>
-              
-              {/* Central hub */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-                <div className="glass-effect p-6 rounded-2xl w-[280px] neo-glow">
-                  <div className="space-y-6">
-                    <div className="flex items-center justify-between">
-                      <div className="h-3 w-3/4 bg-primary/20 rounded-full"></div>
-                      <div className="flex space-x-1">
-                        <div className="h-2 w-2 rounded-full bg-blue-400"></div>
-                        <div className="h-2 w-2 rounded-full bg-white/20"></div>
-                      </div>
+      <div className="container relative z-10 px-4 md:px-6">
+        {/* Trust badge */}
+        <div className="text-center mb-8">
+          <p className="text-sm text-muted-foreground">55,000+ Business Trust</p>
+        </div>
+
+        <div className="flex flex-col md:flex-row items-center gap-8 relative">
+          {/* Left dashboard widget */}
+          <ScrollReveal animation="slide-in-left" className="w-full md:w-1/4 lg:w-1/5">
+            <Card className="glass-effect overflow-hidden">
+              <div className="p-4">
+                <div className="mb-2 flex justify-between items-center">
+                  <h5 className="text-sm font-medium">Income & Expenses</h5>
+                  <span className="text-muted-foreground">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 3.5V12.5M8 3.5L4 7.5M8 3.5L12 7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                </div>
+                
+                <div className="bg-primary/10 px-2 py-1 rounded inline-block mb-3">
+                  <span className="text-xs font-medium text-primary">$2,890</span>
+                </div>
+
+                <div className="h-20 w-full">
+                  <svg viewBox="0 0 100 40" width="100%" height="100%" preserveAspectRatio="none">
+                    <path d="M0,35 L5,28 L10,32 L15,20 L20,25 L25,18 L30,28 L35,15 L40,20 L45,5 L50,14 L55,10 L60,20 L65,25 L70,10 L75,20 L80,15 L85,25 L90,5 L95,15 L100,10" 
+                      fill="none" 
+                      stroke="url(#gradient)" 
+                      strokeWidth="2"
+                    />
+                    <defs>
+                      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#3b82f6" />
+                        <stop offset="100%" stopColor="#8b5cf6" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+
+                <div className="grid grid-cols-7 gap-1 mt-2">
+                  {['M','T','W','T','F','S','S'].map((day, i) => (
+                    <div key={i} className="text-[10px] text-center text-muted-foreground">
+                      {day}
                     </div>
-                    
-                    <div className="flex flex-col items-center gap-4">
-                      <div className="h-24 w-24 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg shadow-primary/20 animate-pulse-subtle">
-                        <span className="text-white text-2xl font-bold">AI</span>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="h-2 w-2/3 bg-primary/20 rounded-full mx-auto"></div>
-                        <div className="h-2 w-1/2 bg-primary/10 rounded-full mx-auto"></div>
-                      </div>
-                      
-                      <div className="flex justify-center gap-4 w-full">
-                        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/20 flex items-center justify-center">
-                          <Phone size={18} className="text-white" />
-                        </div>
-                        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 shadow-lg shadow-purple-500/20 flex items-center justify-center">
-                          <Users size={18} className="text-white" />
-                        </div>
-                        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 shadow-lg shadow-indigo-500/20 flex items-center justify-center">
-                          <BarChart3 size={18} className="text-white" />
-                        </div>
-                      </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-4 border-t border-white/10">
+                <div className="p-4">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <div className="text-2xl font-bold">75%</div>
+                      <div className="text-xs text-muted-foreground">Member Growth</div>
                     </div>
-                    
-                    <div className="space-y-1.5">
-                      <div className="h-1.5 w-full bg-primary/10 rounded-full">
-                        <div className="h-full w-4/5 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
-                      </div>
-                      <div className="h-1.5 w-full bg-primary/10 rounded-full">
-                        <div className="h-full w-3/5 bg-gradient-to-r from-secondary to-primary rounded-full"></div>
-                      </div>
-                    </div>
+                    <Button variant="outline" size="sm" className="text-xs h-8 px-3 py-1">
+                      Details
+                    </Button>
                   </div>
                 </div>
               </div>
-              
-              {/* Floating elements */}
-              <div className="absolute top-1/4 right-1/4 glass-effect p-3 rounded-lg animate-float-slow shadow-lg shadow-blue-500/5" style={{animationDelay: '1s'}}>
-                <Phone size={20} className="text-blue-400" />
+            </Card>
+          </ScrollReveal>
+
+          {/* Main content */}
+          <div className="flex-1 text-center space-y-6 max-w-3xl mx-auto">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tighter">
+              Deliver <span className="bg-green-400 text-black px-4">the Perfect</span><br />
+              solution for your client <span className="relative">now
+                <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 138 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 5.93188C30.1613 2.5698 103.378 -0.0893219 137 6.90112" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              </span>
+            </h1>
+            
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Transform enterprise communication with autonomous AI agents that deliver personalized conversations and comprehensive analytics at unprecedented scale.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
+              <div className="relative flex items-center w-full sm:w-auto max-w-md">
+                <input 
+                  type="email" 
+                  placeholder="Enter your email address" 
+                  className="w-full px-4 py-3 rounded-full bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-primary/50 pr-32"
+                />
+                <Button className="absolute right-1 h-10 rounded-full bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-black font-medium">
+                  Get Started
+                </Button>
               </div>
-              <div className="absolute bottom-1/4 left-1/3 glass-effect p-3 rounded-lg animate-float-slow shadow-lg shadow-purple-500/5" style={{animationDelay: '1.5s'}}>
-                <Users size={20} className="text-purple-400" />
-              </div>
-              <div className="absolute top-1/3 left-1/4 glass-effect p-3 rounded-lg animate-float-slow shadow-lg shadow-indigo-500/5" style={{animationDelay: '2s'}}>
-                <BarChart3 size={20} className="text-indigo-400" />
-              </div>
-              <div className="absolute bottom-1/3 right-1/3 glass-effect p-3 rounded-lg animate-float-slow shadow-lg shadow-blue-500/5" style={{animationDelay: '2.5s'}}>
-                <Lock size={20} className="text-blue-400" />
-              </div>
+            </div>
+            
+            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground pt-2">
+              <span>This template</span>
+              <span className="h-1 w-1 rounded-full bg-muted-foreground"></span>
+              <span>Free to get started</span>
             </div>
           </div>
+
+          {/* Right dashboard widget */}
+          <ScrollReveal animation="slide-in-right" className="w-full md:w-1/4 lg:w-1/5">
+            <Card className="glass-effect overflow-hidden">
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-6">
+                  <h5 className="text-sm font-medium">Total Revenue</h5>
+                </div>
+                
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-8 w-8 rounded-full bg-green-400 flex items-center justify-center text-black">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M8 12H16M16 12L12 8M16 12L12 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <span className="text-2xl font-bold">4.32k</span>
+                </div>
+              </div>
+
+              <div className="border-t border-white/10">
+                <div className="p-4">
+                  <div className="mb-2 flex justify-between">
+                    <div className="text-sm">Balance</div>
+                    <div className="text-xs px-2 py-0.5 bg-green-900/30 text-green-400 rounded">Reserved</div>
+                  </div>
+                  <div className="text-xl font-bold mb-4">$60,124.00</div>
+                  
+                  <div className="flex items-center">
+                    <div className="flex-1 bg-green-400/20 h-2 rounded-full">
+                      <div className="bg-green-400 h-2 rounded-full" style={{ width: '75%' }}></div>
+                    </div>
+                    <span className="text-xs ml-2">Fine</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </ScrollReveal>
         </div>
         
-        <div className="mt-20 border-t border-white/10 pt-8">
-          <p className="text-center text-sm text-muted-foreground mb-6">Powering enterprises worldwide with cutting-edge AI communication</p>
-          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 opacity-70">
-            <div className="text-xl font-bold text-muted-foreground/70 flex items-center">
-              <div className="w-5 h-5 rounded-full bg-blue-500/20 mr-2"></div>
-              Twilio Enterprise
+        {/* Bottom icons section */}
+        <div className="mt-24 pt-10 border-t border-white/10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 rounded-full bg-card flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 16V7.2C21 6.0799 21 5.51984 20.782 5.09202C20.5903 4.7157 20.2843 4.40974 19.908 4.21799C19.4802 4 18.9201 4 17.8 4H6.2C5.0799 4 4.51984 4 4.09202 4.21799C3.7157 4.40973 3.40973 4.71569 3.21799 5.09202C3 5.51984 3 6.0799 3 7.2V16.8C3 17.9201 3 18.4802 3.21799 18.908C3.40973 19.2843 3.71569 19.5903 4.09202 19.782C4.51984 20 5.0799 20 6.2 20H17.8C18.9201 20 19.4802 20 19.908 19.782C20.2843 19.5903 20.5903 19.2843 20.782 18.908C21 18.4802 21 17.9201 21 16.8V16Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M3.5 9H20.5M8 4V2M16 4V2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Upload your leads file and let our AI system handle the rest.</p>
+              </div>
             </div>
-            <div className="text-xl font-bold text-muted-foreground/70 flex items-center">
-              <div className="w-5 h-5 rounded-full bg-blue-500/20 mr-2"></div>
-              Google Cloud
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 rounded-full bg-card flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 12C21 16.9706 16.9706 21 12 21M21 12C21 7.02944 16.9706 3 12 3M21 12H3M12 21C7.02944 21 3 16.9706 3 12M12 21C13.6569 21 15 16.9706 15 12C15 7.02944 13.6569 3 12 3M12 21C10.3431 21 9 16.9706 9 12C9 7.02944 10.3431 3 12 3M3 12C3 7.02944 7.02944 3 12 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Automated outbound calls with natural-sounding AI voice technology.</p>
+              </div>
             </div>
-            <div className="text-xl font-bold text-muted-foreground/70 flex items-center">
-              <div className="w-5 h-5 rounded-full bg-blue-500/20 mr-2"></div>
-              Amazon Connect
-            </div>
-            <div className="text-xl font-bold text-muted-foreground/70 flex items-center">
-              <div className="w-5 h-5 rounded-full bg-blue-500/20 mr-2"></div>
-              Salesforce AI
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 rounded-full bg-card flex items-center justify-center">
+                <BarChart3 size={24} className="text-muted-foreground" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Comprehensive analytics dashboard for monitoring campaign performance.</p>
+              </div>
             </div>
           </div>
         </div>
