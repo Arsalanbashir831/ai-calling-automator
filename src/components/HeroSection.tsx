@@ -17,7 +17,7 @@ const HeroSection = () => {
           <p className="text-sm text-muted-foreground">55,000+ Business Trust</p>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center gap-8 relative">
+        <div className="flex flex-col lg:flex-row md:flex-row items-center gap-8 relative">
           {/* Left dashboard widget */}
           <ScrollReveal animation="slide-in-left" className="w-full md:w-1/4 lg:w-1/5">
             <Card className="glass-effect overflow-hidden">
