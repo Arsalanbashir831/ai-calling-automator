@@ -85,20 +85,9 @@ const HeroSection = () => {
               Transform enterprise communication with autonomous AI agents that deliver personalized conversations and comprehensive analytics at unprecedented scale.
             </p>
             
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
-              <div className="relative flex items-center w-full sm:w-auto max-w-md">
-                <input type="email" placeholder="Enter your email address" className="w-full px-4 py-3 rounded-full bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-primary/50 pr-32" />
-                <Button className="absolute right-1 h-10 rounded-full bg-gradient-to-r from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white font-medium">
-                  Get Started
-                </Button>
-              </div>
-            </div>
             
-            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground pt-2">
-              <span>This template</span>
-              <span className="h-1 w-1 rounded-full bg-muted-foreground"></span>
-              <span>Free to get started</span>
-            </div>
+            
+            
           </div>
 
           {/* Right dashboard widget */}
@@ -130,9 +119,9 @@ const HeroSection = () => {
                   
                   <div className="flex items-center">
                     <div className="flex-1 bg-green-400/20 h-2 rounded-full">
-                      <div className="bg-green-400 h-2 rounded-full" style={{
+                      <div style={{
                       width: '75%'
-                    }}></div>
+                    }} className="bg-blue-400 h-2 rounded-full"></div>
                     </div>
                     <span className="text-xs ml-2">Fine</span>
                   </div>
