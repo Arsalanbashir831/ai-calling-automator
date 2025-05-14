@@ -5,6 +5,9 @@ import { useEffect, useRef, useState } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 
 const FeaturesSection = () => {
+  // Define the allowed animation types to match ScrollReveal component's interface
+  type AnimationType = "slide-in-left" | "slide-in-right" | "fade-in" | "slide-up" | "scale-in" | "none";
+  
   const features = [
     {
       title: "Upload Your Lead Lists",
@@ -12,7 +15,7 @@ const FeaturesSection = () => {
       icon: <Upload className="h-10 w-10 text-blue-400" />,
       gradient: "from-blue-500/10 via-indigo-400/10 to-purple-500/10",
       iconBg: "bg-gradient-to-br from-blue-500 to-indigo-600",
-      animation: "slide-in-left"
+      animation: "slide-in-left" as AnimationType
     },
     {
       title: "Smart Call Scheduling",
@@ -20,7 +23,7 @@ const FeaturesSection = () => {
       icon: <Calendar className="h-10 w-10 text-indigo-400" />,
       gradient: "from-indigo-500/10 via-purple-400/10 to-pink-500/10",
       iconBg: "bg-gradient-to-br from-indigo-500 to-purple-600",
-      animation: "slide-in-right"
+      animation: "slide-in-right" as AnimationType
     },
     {
       title: "AI Powered Calling",
@@ -28,7 +31,7 @@ const FeaturesSection = () => {
       icon: <PhoneCall className="h-10 w-10 text-purple-400" />,
       gradient: "from-purple-500/10 via-pink-400/10 to-red-500/10",
       iconBg: "bg-gradient-to-br from-purple-500 to-pink-600",
-      animation: "slide-in-left"
+      animation: "slide-in-left" as AnimationType
     },
     {
       title: "Analytics Dashboard",
@@ -36,7 +39,7 @@ const FeaturesSection = () => {
       icon: <BarChart2 className="h-10 w-10 text-pink-400" />,
       gradient: "from-pink-500/10 via-red-400/10 to-orange-500/10", 
       iconBg: "bg-gradient-to-br from-pink-500 to-red-600",
-      animation: "slide-in-right"
+      animation: "slide-in-right" as AnimationType
     },
     {
       title: "Engagement Tracking",
@@ -44,7 +47,7 @@ const FeaturesSection = () => {
       icon: <Activity className="h-10 w-10 text-red-400" />,
       gradient: "from-blue-500/10 via-cyan-400/10 to-teal-500/10",
       iconBg: "bg-gradient-to-br from-blue-500 to-cyan-600",
-      animation: "slide-in-left"
+      animation: "slide-in-left" as AnimationType
     },
     {
       title: "Conversation Intelligence",
@@ -52,7 +55,7 @@ const FeaturesSection = () => {
       icon: <MessageSquare className="h-10 w-10 text-cyan-400" />,
       gradient: "from-cyan-500/10 via-teal-400/10 to-emerald-500/10",
       iconBg: "bg-gradient-to-br from-cyan-500 to-teal-600",
-      animation: "slide-in-right"
+      animation: "slide-in-right" as AnimationType
     },
   ];
 
