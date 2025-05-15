@@ -1,15 +1,14 @@
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Home, BarChart2, Calendar, MessageSquare, Settings, Users, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const sidebarItems = [
   {
     icon: Home,
     label: "Overview",
     href: "/dashboard",
-    active: true,
   },
   {
     icon: BarChart2,
@@ -45,12 +44,33 @@ interface DashboardSidebarProps {
 }
 
 const DashboardSidebar = ({ collapsed = false, onToggle }: DashboardSidebarProps) => {
-  const [activeItem, setActiveItem] = useState("Overview");
+  const location = useLocation();
+  const [activeItem, setActiveItem] = useState("");
+  
+  // Set the active item based on the current route
+  useEffect(() => {
+    const path = location.pathname;
+    
+    // Find the matching item
+    const matchingItem = sidebarItems.find(item => {
+      if (item.href === "/dashboard" && path === "/dashboard") {
+        return true;
+      }
+      return path.startsWith(item.href);
+    });
+    
+    if (matchingItem) {
+      setActiveItem(matchingItem.label);
+    }
+  }, [location.pathname]);
   
   return (
-    <aside className={`border-r border-border/40 flex flex-col bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all ${
-      collapsed ? "w-16" : "w-64"
-    }`}>
+    <aside 
+      id="sidebar"
+      className={`border-r border-border/40 flex flex-col bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all ${
+        collapsed ? "w-16" : "w-64"
+      }`}
+    >
       <div className="flex-1 overflow-auto py-2">
         <div className="px-3 py-2">
           <div className="flex items-center h-12">
