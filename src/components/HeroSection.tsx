@@ -1,6 +1,7 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { BarChart3, CheckCircle } from "lucide-react"; 
+import { CheckCircle } from "lucide-react"; 
 import { Card } from "@/components/ui/card";
 import { motion, Variants, useInView, useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect, useRef } from "react";
@@ -16,7 +17,7 @@ function useAnimatedCounter(targetValue: number, duration: number = 1.5) {
     if (isInView) {
       const controls = animate(count, targetValue, {
         duration: duration,
-        ease: "easeInOut", // Smoother ease function
+        ease: "easeInOut",
       });
       return controls.stop;
     }
@@ -32,7 +33,7 @@ const HeroSection = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { duration: 0.8, staggerChildren: 0.2, delayChildren: 0.2, ease: "easeInOut" }, // Smoother transition
+      transition: { duration: 0.8, staggerChildren: 0.2, delayChildren: 0.2, ease: "easeInOut" },
     },
   };
 
@@ -46,11 +47,11 @@ const HeroSection = () => {
       scale: 1,
       transition: {
         type: "spring",
-        damping: 18, // Reduced damping for smoother transition
-        stiffness: 80, // Reduced stiffness for smoother easing
+        damping: 18,
+        stiffness: 80,
         delay,
         duration: 0.8,
-        ease: "easeInOut", // Smooth easing
+        ease: "easeInOut",
       },
     }),
   });
@@ -66,9 +67,9 @@ const HeroSection = () => {
         type: "spring",
         damping: 15,
         stiffness: 100,
-        delay: i * 0.1, // Adjusted stagger delay for smoother flow
+        delay: i * 0.1,
         duration: 0.8,
-        ease: "easeInOut", // Smooth easing
+        ease: "easeInOut",
       },
     }),
   };
@@ -97,7 +98,7 @@ const HeroSection = () => {
     visible: (delay: number = 0) => ({
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: "easeInOut", delay }, // Smoothed out transition
+      transition: { duration: 0.8, ease: "easeInOut", delay },
     }),
   };
 
@@ -132,7 +133,7 @@ const HeroSection = () => {
   return (
     <motion.section
       id="hero"
-      className="py-20  relative overflow-hidden bg-gray-950 text-white" 
+      className="py-20 pt-28 md:pt-20 relative overflow-hidden bg-gray-950 text-white" 
       variants={sectionOverallVariants}
       initial="hidden"
       whileInView="visible"
@@ -173,70 +174,9 @@ const HeroSection = () => {
           {/* Placeholder for trust badge */}
         </div>
 
-        <div className="flex lg:flex-row flex-col items-center gap-12 lg:gap-8 relative py-10">
-          {/* Left dashboard widget */}
-          <motion.div
-            className="w-full md:w-1/3 lg:w-1/4 xl:w-1/5"
-            variants={widgetVariants("left")}
-            custom={0.2}
-          >
-            <Card className="glass-effect-strong overflow-hidden shadow-2xl shadow-blue-500/10 border border-white/10">
-              <div className="p-5">
-                <div className="mb-3 flex justify-between items-center">
-                  <h5 className="text-sm font-semibold text-white/90">Lead Generation</h5>
-                  <span className="text-blue-400">
-                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8 3.5V12.5M8 3.5L4 7.5M8 3.5L12 7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                </div>
-                <div className="bg-blue-500/20 px-3 py-1.5 rounded-md inline-block mb-4 shadow-inner">
-                  <span className="text-sm font-bold text-blue-300" ref={leadGenAmount.ref}>
-                    $<motion.span>{leadGenAmount.displayValue}</motion.span>
-                  </span>
-                </div>
-                <div className="h-24 w-full" ref={lineChartPathRef}>
-                  <svg viewBox="0 0 100 40" width="100%" height="100%" preserveAspectRatio="none">
-                    <defs>
-                      <linearGradient id="heroChartGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#3b82f6" />
-                        <stop offset="100%" stopColor="#8b5cf6" />
-                      </linearGradient>
-                    </defs>
-                    <motion.path 
-                      d="M0,35 L5,28 L10,32 L15,20 L20,25 L25,18 L30,28 L35,15 L40,20 L45,5 L50,14 L55,10 L60,20 L65,25 L70,10 L75,20 L80,15 L85,25 L90,5 L95,15 L100,10" 
-                      fill="none" 
-                      stroke="url(#heroChartGradient)" 
-                      strokeWidth="2.5" 
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      animate={isLineChartInView ? { pathLength: 1, opacity: 1 } : {}}
-                      transition={{ duration: 2, ease: "easeInOut", delay: 0.5 }}
-                    />
-                  </svg>
-                </div>
-                <div className="grid grid-cols-7 gap-1.5 mt-3">
-                  {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => <div key={i} className="text-xs text-center text-white/60">{day}</div>)}
-                </div>
-              </div>
-              <div className="mt-4 border-t border-white/10">
-                <div className="p-5">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <div className="text-3xl font-bold text-white" ref={memberGrowth.ref}>
-                        <motion.span>{memberGrowth.displayValue}</motion.span>%
-                      </div>
-                      <div className="text-xs text-white/70">Member Growth</div>
-                    </div>
-                    <Button variant="outline" size="sm" className="text-xs h-9 px-4 py-2 border-white/20 hover:bg-white/10 text-white/80">Details</Button>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          </motion.div>
-          
-
-          {/* Main content */}
-          <div className="flex-1 text-center space-y-8 max-w-3xl mx-auto py-8 lg:py-0">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8 relative py-4 md:py-10">
+          {/* Main content - Moved to the top for mobile */}
+          <div className="flex-1 text-center order-2 lg:order-2 space-y-6 md:space-y-8 max-w-3xl mx-auto">
             <motion.h1
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-white"
               initial="hidden"
@@ -305,22 +245,81 @@ const HeroSection = () => {
               Transform enterprise communication with autonomous AI agents that deliver personalized conversations and comprehensive analytics at unprecedented scale.
             </motion.p>
             <motion.div 
-  initial={{ opacity: 0, scale: 0.95 }} 
-  animate={{ opacity: 1, scale: 1 }} 
-  transition={{ duration: 0.3, ease: "easeInOut" }}
->
-  <Button 
-    className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-3 px-6 rounded-md shadow-lg hover:scale-105 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform"
-  >
-    Get Started
-  </Button>
-</motion.div>
-
+              initial={{ opacity: 0, scale: 0.95 }} 
+              animate={{ opacity: 1, scale: 1 }} 
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <Button 
+                className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-3 px-6 rounded-md shadow-lg hover:scale-105 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform"
+              >
+                Get Started
+              </Button>
+            </motion.div>
           </div>
+
+          {/* Left dashboard widget */}
+          <motion.div
+            className="w-full sm:w-2/3 md:w-1/2 lg:w-1/4 xl:w-1/5 order-1 lg:order-1"
+            variants={widgetVariants("left")}
+            custom={0.2}
+          >
+            <Card className="glass-effect-strong overflow-hidden shadow-2xl shadow-blue-500/10 border border-white/10">
+              <div className="p-5">
+                <div className="mb-3 flex justify-between items-center">
+                  <h5 className="text-sm font-semibold text-white/90">Lead Generation</h5>
+                  <span className="text-blue-400">
+                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 3.5V12.5M8 3.5L4 7.5M8 3.5L12 7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </div>
+                <div className="bg-blue-500/20 px-3 py-1.5 rounded-md inline-block mb-4 shadow-inner">
+                  <span className="text-sm font-bold text-blue-300" ref={leadGenAmount.ref}>
+                    $<motion.span>{leadGenAmount.displayValue}</motion.span>
+                  </span>
+                </div>
+                <div className="h-24 w-full" ref={lineChartPathRef}>
+                  <svg viewBox="0 0 100 40" width="100%" height="100%" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="heroChartGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#3b82f6" />
+                        <stop offset="100%" stopColor="#8b5cf6" />
+                      </linearGradient>
+                    </defs>
+                    <motion.path 
+                      d="M0,35 L5,28 L10,32 L15,20 L20,25 L25,18 L30,28 L35,15 L40,20 L45,5 L50,14 L55,10 L60,20 L65,25 L70,10 L75,20 L80,15 L85,25 L90,5 L95,15 L100,10" 
+                      fill="none" 
+                      stroke="url(#heroChartGradient)" 
+                      strokeWidth="2.5" 
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={isLineChartInView ? { pathLength: 1, opacity: 1 } : {}}
+                      transition={{ duration: 2, ease: "easeInOut", delay: 0.5 }}
+                    />
+                  </svg>
+                </div>
+                <div className="grid grid-cols-7 gap-1.5 mt-3">
+                  {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => <div key={i} className="text-xs text-center text-white/60">{day}</div>)}
+                </div>
+              </div>
+              <div className="mt-4 border-t border-white/10">
+                <div className="p-5">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <div className="text-3xl font-bold text-white" ref={memberGrowth.ref}>
+                        <motion.span>{memberGrowth.displayValue}</motion.span>%
+                      </div>
+                      <div className="text-xs text-white/70">Member Growth</div>
+                    </div>
+                    <Button variant="outline" size="sm" className="text-xs h-9 px-4 py-2 border-white/20 hover:bg-white/10 text-white/80">Details</Button>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </motion.div>
 
           {/* Right dashboard widget */}
           <motion.div
-            className="w-full md:w-1/3 lg:w-1/4 xl:w-1/5"
+            className="w-full sm:w-2/3 md:w-1/2 lg:w-1/4 xl:w-1/5 order-3 lg:order-3"
             variants={widgetVariants("right")}
             custom={0.4}
           >

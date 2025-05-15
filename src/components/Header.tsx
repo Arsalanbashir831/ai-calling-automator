@@ -1,11 +1,14 @@
+
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom"; 
+import { Menu, X } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState("");
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,7 +26,7 @@ const Header = () => {
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
-    setIsMobileMenuOpen(false); // Close the menu when a link is clicked (for mobile)
+    setIsOpen(false); // Close the menu when a link is clicked
   };
 
   const navLinks = [
@@ -59,48 +62,58 @@ const Header = () => {
           ))}
         </nav>
 
-        {/* Mobile Menu Toggle */}
-        <div className="md:hidden flex items-center">
-          <button 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
-            className="text-white focus:outline-none"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-          </button>
+        {/* Mobile Menu with Sheet Component */}
+        <div className="md:hidden">
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="text-white" aria-label="Menu">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[80%] p-0 bg-black/95 border-l border-white/10">
+              <div className="h-full flex flex-col">
+                <div className="flex items-center justify-between p-4 border-b border-white/10">
+                  <div className="flex items-center space-x-3">
+                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-base shadow-lg shadow-primary/20">
+                      AI
+                    </div>
+                    <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80">AI Calling</span>
+                  </div>
+                  <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)} className="text-white/80 hover:text-white">
+                    <X className="h-5 w-5" />
+                  </Button>
+                </div>
+                
+                <div className="flex flex-col p-4 space-y-6">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.name}
+                      to={link.href}
+                      className={`text-lg font-medium ${activeLink === link.name ? 'text-white' : 'text-muted-foreground'} hover:text-white transition-colors`}
+                      onClick={() => handleLinkClick(link.name)}
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
+                </div>
+                
+                <div className="mt-auto p-4 border-t border-white/10">
+                  <Button className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-md shadow-blue-500/10">
+                    Get Started
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
 
-        {/* Get Started Button */}
-        <div className="flex items-center gap-5">
+        {/* Get Started Button - Only visible on desktop */}
+        <div className="hidden md:flex items-center gap-5">
           <Button className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-md shadow-blue-500/10">
             Get Started
           </Button>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="absolute top-0 left-0 right-0 bg-black/80 p-5 md:hidden">
-          <div className="flex flex-col items-center space-y-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                className={`text-lg font-medium ${activeLink === link.name ? 'text-white' : 'text-muted-foreground'} hover:text-white transition-colors`}
-                onClick={() => handleLinkClick(link.name)}
-              >
-                {link.name}
-              </Link>
-            ))}
-            <div className="mt-5 flex gap-4">
-              <Button className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md shadow-blue-500/10">
-                Get Started
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </header>
   );
 }
