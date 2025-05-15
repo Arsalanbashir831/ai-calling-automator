@@ -1,269 +1,366 @@
-
-import { Upload, Calendar, PhoneCall, BarChart2, User, Settings } from "lucide-react";
+import { Upload, Calendar, PhoneCall, BarChart2, User, Settings, Mail, Lock, Eye, EyeOff } from "lucide-react"; // Added Mail, Lock, Eye, EyeOff
 import { Card } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import ScrollReveal from "@/components/ScrollReveal";
-import { useRef, useState, useEffect } from "react";
+// import ScrollReveal from "@/components/ScrollReveal"; // Replaced by Framer Motion
+import { motion, AnimatePresence } from "framer-motion";
+import { useRef, useState, useEffect } from "react"; // useEffect is not used here, but kept from original
+
+// Helper for staggering children
+const staggerContainer = (staggerChildren = 0.1, delayChildren = 0) => ({
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren,
+      delayChildren,
+    },
+  },
+});
+
+const fadeInFromBottom = (delay = 0, duration = 0.5) => ({
+  hidden: { y: 30, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      damping: 15,
+      stiffness: 100,
+      duration,
+      delay,
+    },
+  },
+});
+
+const fadeIn = (delay = 0, duration = 0.5) => ({
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration,
+      delay,
+      ease: "easeInOut"
+    },
+  },
+});
+
+const scaleIn = (delay = 0, duration = 0.4) => ({
+  hidden: { scale: 0.5, opacity: 0 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      damping: 12,
+      stiffness: 100,
+      delay,
+      duration,
+    },
+  },
+});
+
+const drawLine = (delay = 0, duration = 0.8) => ({
+  hidden: { pathLength: 0, opacity: 0 },
+  visible: {
+    pathLength: 1,
+    opacity: 1,
+    transition: {
+      duration,
+      delay,
+      ease: "circOut",
+    },
+  },
+});
 
 const HowItWorksSection = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const steps = [
     {
       step: "STEP 1",
       title: "Setup Your Account",
-      description: "Start by providing your basic information and uploading your leads database in CSV format.",
-      icon: <Upload className="w-6 h-6 text-blue-400" />,
-      content: (
-        <div className="bg-black/40 backdrop-blur-lg p-6 rounded-xl border border-white/10">
-          <div className="text-lg font-semibold mb-4 text-white">Create an Account</div>
-          <div className="space-y-4">
-            <div className="relative">
-              <User className="absolute left-3 top-3 h-5 w-5 text-white/50" />
+      description: "Provide your basic information and upload your leads database in CSV format to kickstart your journey.",
+      icon: <Upload className="w-8 h-8 text-blue-400" />, // Icon size increased
+      content: (motionInstance) => ( // Pass motion instance for dynamic content animation
+        <motion.div 
+          className="bg-black/50 backdrop-blur-xl p-6 rounded-xl border border-white/10 shadow-2xl"
+          variants={staggerContainer(0.15)} // Stagger children inside content
+        >
+          <motion.div className="text-lg font-semibold mb-6 text-white" variants={fadeInFromBottom(0.1)}>Create an Account</motion.div>
+          <motion.div className="space-y-4" variants={staggerContainer(0.1, 0.2)}>
+            <motion.div className="relative" variants={fadeInFromBottom()}>
+              <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-white/60" />
+              <input type="text" placeholder="Full Name" className="w-full bg-white/10 border border-white/20 rounded-lg py-3 pl-12 pr-4 text-white placeholder:text-white/60 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all" />
+            </motion.div>
+            <motion.div className="relative" variants={fadeInFromBottom()}>
+              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-white/60" />
+              <input type="email" placeholder="Email Address" className="w-full bg-white/10 border border-white/20 rounded-lg py-3 pl-12 pr-4 text-white placeholder:text-white/60 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all" />
+            </motion.div>
+            <motion.div className="relative" variants={fadeInFromBottom()}>
+              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-white/60" />
               <input 
-                type="text" 
-                placeholder="Name" 
-                className="w-full bg-white/5 border border-white/10 rounded-md py-2 pl-10 pr-3 text-white" 
-              />
-            </div>
-            <div className="relative">
-              <svg className="absolute left-3 top-3 h-5 w-5 text-white/50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-              </svg>
-              <input 
-                type="email" 
-                placeholder="Email" 
-                className="w-full bg-white/5 border border-white/10 rounded-md py-2 pl-10 pr-3 text-white" 
-              />
-            </div>
-            <div className="relative">
-              <svg className="absolute left-3 top-3 h-5 w-5 text-white/50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                <path d="M7 11V7a5 5 0 0110 0v4" />
-              </svg>
-              <input 
-                type="password" 
+                type={showPassword ? "text" : "password"} 
                 placeholder="Password" 
-                className="w-full bg-white/5 border border-white/10 rounded-md py-2 pl-10 pr-3 text-white" 
+                className="w-full bg-white/10 border border-white/20 rounded-lg py-3 pl-12 pr-12 text-white placeholder:text-white/60 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all" 
               />
-              <svg className="absolute right-3 top-3 h-5 w-5 text-white/50 cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" />
-                <line x1="1" y1="1" x2="23" y2="23" />
-              </svg>
-            </div>
-          </div>
-        </div>
+              <button onClick={() => setShowPassword(!showPassword)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/60 hover:text-white/90 transition-colors">
+                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </motion.div>
+             <motion.button 
+                variants={fadeInFromBottom(0.1)}
+                className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-blue-500/50 transition-all duration-300 transform hover:scale-105"
+              >
+                Get Started
+            </motion.button>
+          </motion.div>
+        </motion.div>
       )
     },
     {
       step: "STEP 2",
       title: "Configure Call Schedule",
-      description: "Set up your outbound calling schedule and define your preferences for the AI sales agent.",
-      icon: <Calendar className="w-6 h-6 text-indigo-400" />,
-      content: (
-        <div className="bg-black/40 backdrop-blur-lg p-6 rounded-xl border border-white/10">
-          <div className="text-lg font-semibold mb-4 text-white">Call Schedule Setup</div>
-          <div className="space-y-4">
-            <div className="bg-black/30 p-4 rounded-lg border border-white/5">
+      description: "Define your outbound calling windows and AI agent preferences for optimal engagement.",
+      icon: <Calendar className="w-8 h-8 text-blue-400" />,
+      content: (motionInstance) => ( // Placeholder for more detailed animation
+        <motion.div className="bg-black/50 backdrop-blur-xl p-6 rounded-xl border border-white/10 shadow-2xl" variants={staggerContainer(0.1)}>
+          <motion.div className="text-lg font-semibold mb-4 text-white" variants={fadeInFromBottom(0.1)}>Call Schedule Setup</motion.div>
+          {/* Add animated elements here similar to Step 1 */}
+          <motion.div className="space-y-4" variants={staggerContainer(0.1, 0.2)}>
+            <motion.div className="bg-black/40 p-4 rounded-lg border border-white/10" variants={fadeInFromBottom()}>
               <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center">
-                  <div className="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
-                  <span className="text-sm text-white">Business Hours</span>
-                </div>
-                <div className="flex h-6 items-center">
-                  <div className="bg-indigo-900/50 w-10 h-5 rounded-full flex items-center p-1">
-                    <div className="bg-indigo-500 w-4 h-4 rounded-full transform translate-x-4"></div>
-                  </div>
-                </div>
+                <div className="flex items-center"><div className="w-3 h-3 rounded-full bg-blue-500 mr-2 animate-pulse"></div><span className="text-sm text-white">Business Hours</span></div>
+                {/* Simplified Toggle for brevity, can be animated component */}
+                <div className="flex h-6 items-center"><div className="bg-blue-700 w-10 h-5 rounded-full flex items-center p-0.5"><div className="bg-blue-300 w-4 h-4 rounded-full transform translate-x-5 transition-transform"></div></div></div>
               </div>
-              <div className="flex justify-between text-xs">
-                <div className="flex items-center">
-                  <span className="text-white/70">9:00 AM</span>
-                  <span className="mx-2 text-white/50">to</span>
-                  <span className="text-white/70">5:00 PM</span>
+              <div className="flex justify-between text-xs"><div className="flex items-center"><span className="text-white/70">9:00 AM</span><span className="mx-2 text-white/50">-</span><span className="text-white/70">5:00 PM</span></div><div className="text-blue-400">Mon-Fri</div></div>
+            </motion.div>
+            <motion.div className="bg-black/40 p-4 rounded-lg border border-white/10" variants={fadeInFromBottom()}>
+                <div className="flex items-center justify-between mb-2"><div className="flex items-center"><div className="w-3 h-3 rounded-full bg-indigo-500 mr-2 animate-pulse"></div><span className="text-sm text-white">Call Frequency</span></div></div>
+                <div className="space-y-2">
+                    <div className="text-xs text-white/70">Calls per hour: <span className="font-bold text-indigo-300">30</span></div>
+                    <div className="h-2.5 w-full bg-white/10 rounded-full"><motion.div initial={{width:0}} whileInView={{width:'60%'}} transition={{duration:1, delay:0.5}} className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full"></motion.div></div>
                 </div>
-                <div className="text-indigo-400">Mon-Fri</div>
-              </div>
-            </div>
-            
-            <div className="bg-black/30 p-4 rounded-lg border border-white/5">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center">
-                  <div className="w-3 h-3 rounded-full bg-purple-500 mr-2"></div>
-                  <span className="text-sm text-white">Call Frequency</span>
-                </div>
-                <div className="flex h-6 items-center">
-                  <div className="bg-purple-900/50 w-10 h-5 rounded-full flex items-center p-1">
-                    <div className="bg-purple-500 w-4 h-4 rounded-full transform translate-x-4"></div>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-xs text-white/70">Calls per hour</div>
-                <div className="h-2 w-full bg-white/10 rounded-full">
-                  <div className="h-full w-3/5 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full"></div>
-                </div>
-                <div className="flex justify-between text-xs text-white/50">
-                  <span>10</span>
-                  <span>20</span>
-                  <span>30</span>
-                  <span>40</span>
-                  <span>50</span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-black/30 p-4 rounded-lg border border-white/5">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <div className="w-3 h-3 rounded-full bg-pink-500 mr-2"></div>
-                  <span className="text-sm text-white">Retry Settings</span>
-                </div>
-                <div className="text-pink-400 text-sm">3 attempts</div>
-              </div>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+             <motion.button 
+                variants={fadeInFromBottom(0.1)}
+                className="w-full bg-white/10 hover:bg-white/20 border border-blue-500 text-blue-400 font-semibold py-3 rounded-lg shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
+              >
+                Customize Schedule
+            </motion.button>
+          </motion.div>
+        </motion.div>
       )
     },
     {
       step: "STEP 3",
       title: "Set Your Preferences",
-      description: "Customize how the AI agent handles conversations and qualifies leads based on your criteria.",
-      icon: <Settings className="w-6 h-6 text-purple-400" />,
-      content: (
-        <div className="bg-black/40 backdrop-blur-lg p-6 rounded-xl border border-white/10">
-          <div className="text-lg font-semibold mb-4 text-white">AI Agent Preferences</div>
-          
-          <div className="space-y-4">
-            <div className="grid grid-cols-7 gap-1 mb-3">
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-purple-600/20 text-white text-xs">M</div>
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-purple-600/20 text-white text-xs">T</div>
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-purple-600 text-white text-xs">W</div>
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-purple-600 text-white text-xs">T</div>
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-purple-600/20 text-white text-xs">F</div>
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 text-white/50 text-xs">S</div>
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 text-white/50 text-xs">S</div>
-            </div>
-            
-            <div className="bg-black/30 p-3 rounded-lg border border-white/5">
-              <div className="flex justify-between items-center">
-                <div className="text-sm text-white">Monday</div>
-                <div className="flex items-center">
-                  <span className="text-xs text-white/70 mr-2">13:00</span>
-                  <span className="text-xs text-white/50 mx-1">to</span>
-                  <span className="text-xs text-white/70">17:00</span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-black/30 p-3 rounded-lg border border-white/5">
-              <div className="flex justify-between items-center">
-                <div className="text-sm text-white">Wednesday</div>
-                <div className="flex items-center">
-                  <span className="text-xs text-white/70 mr-2">09:00</span>
-                  <span className="text-xs text-white/50 mx-1">to</span>
-                  <span className="text-xs text-white/70">15:00</span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-black/30 p-3 rounded-lg border border-white/5">
-              <div className="flex justify-between items-center">
-                <div className="text-sm text-white">Thursday</div>
-                <div className="flex items-center">
-                  <span className="text-xs text-white/70 mr-2">10:00</span>
-                  <span className="text-xs text-white/50 mx-1">to</span>
-                  <span className="text-xs text-white/70">16:00</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      description: "Tailor the AI's conversational style and lead qualification criteria to match your unique strategy.",
+      icon: <Settings className="w-8 h-8 text-blue-400" />,
+      content: (motionInstance) => ( // Placeholder for more detailed animation
+        <motion.div className="bg-black/50 backdrop-blur-xl p-6 rounded-xl border border-white/10 shadow-2xl" variants={staggerContainer(0.1)}>
+          <motion.div className="text-lg font-semibold mb-4 text-white" variants={fadeInFromBottom(0.1)}>AI Agent Preferences</motion.div>
+           {/* Add animated elements here similar to Step 1 */}
+          <motion.div className="space-y-3" variants={staggerContainer(0.08, 0.2)}>
+            <motion.p className="text-sm text-white/80 mb-3" variants={fadeInFromBottom()}>Define active calling days and times:</motion.p>
+            <motion.div className="grid grid-cols-7 gap-2 mb-4" variants={fadeInFromBottom()}>
+              {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => (
+                <motion.div 
+                  key={day} 
+                  className={`flex items-center justify-center w-10 h-10 rounded-full text-sm font-medium cursor-pointer transition-all duration-200 ${[2,3].includes(i) ? 'bg-blue-600 text-white shadow-md scale-105' : 'bg-white/10 text-white/70 hover:bg-white/20'}`}
+                  whileHover={{y: -2}}
+                  variants={scaleIn(i*0.05)}
+                >
+                  {day}
+                </motion.div>
+              ))}
+            </motion.div>
+            {[ "Mon: 1pm - 5pm", "Wed: 9am - 3pm", "Thu: 10am - 4pm"].map((slot, i) => (
+                 <motion.div className="bg-black/40 p-3.5 rounded-lg border border-white/10 flex justify-between items-center" variants={fadeInFromBottom(i*0.1)}>
+                    <span className="text-sm text-white">{slot.split(':')[0]}</span>
+                    <span className="text-xs text-blue-300 bg-blue-800/50 px-2 py-1 rounded-md">{slot.split(':')[1].trim()}</span>
+                </motion.div>
+            ))}
+             <motion.button 
+                variants={fadeInFromBottom(0.1)}
+                className="w-full mt-4 bg-white/10 hover:bg-white/20 border border-purple-500 text-purple-400 font-semibold py-3 rounded-lg shadow-lg hover:shadow-purple-500/30 transition-all duration-300"
+              >
+                Fine-tune AI Behavior
+            </motion.button>
+          </motion.div>
+        </motion.div>
       )
     },
   ];
 
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [activeStep, setActiveStep] = useState(0);
 
-  // Handle scroll-based step activation
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      
-      const sectionTop = sectionRef.current.getBoundingClientRect().top;
-      const sectionHeight = sectionRef.current.offsetHeight;
-      const windowHeight = window.innerHeight;
-      
-      // Calculate which step should be active based on scroll position
-      const scrollProgress = (windowHeight - sectionTop) / (sectionHeight + windowHeight);
-      const stepIndex = Math.min(
-        Math.max(Math.floor(scrollProgress * 5) - 1, 0), 
-        steps.length - 1
-      );
-      
-      setActiveStep(stepIndex);
-    };
+  // Animation for the gradient text shimmer
+  const gradientTextVariants = {
+    initial: { backgroundPosition: "200% center" },
+    animate: {
+      backgroundPosition: "-200% center",
+      transition: {
+        duration: 3, // Slower shimmer
+        repeat: Infinity,
+        ease: "linear",
+      },
+    },
+  };
+  
+  // Animation for the background radial gradient pulse
+  const bgPulseVariants = {
+    initial: { opacity: 0.05, scale: 1 },
+    animate: {
+      opacity: [0.05, 0.1, 0.05], // More subtle pulse
+      scale: [1, 1.05, 1], // Slight scale pulse
+      transition: {
+        duration: 8, // Slower pulse
+        repeat: Infinity,
+        ease: "easeInOut",
+      },
+    },
+  };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [steps.length]);
 
   return (
-    <section id="how-it-works" className="py-28 relative overflow-hidden" ref={sectionRef}>
+    <motion.section 
+      id="how-it-works" 
+      className="py-28 relative overflow-hidden bg-black" // Added bg-black for darker theme
+      ref={sectionRef}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={staggerContainer(0.2)}
+    >
       {/* Background elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(91,33,182,0.1),transparent_70%)]"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDIwIDAgTCAwIDAgTCAwIDIwIiBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')]"></div>
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <motion.div 
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(33,150,243,0.1),transparent_70%)]"
+          variants={bgPulseVariants}
+          initial="initial"
+          animate="animate"
+        />
+        {/* Optional: Add more subtle animated background shapes/particles here */}
+         <div className="absolute -bottom-1/3 -left-1/4 w-2/3 h-2/3 rounded-full bg-gradient-to-br from-blue-900/30 via-transparent to-transparent opacity-50 blur-3xl transform-gpu"></div>
+         <div className="absolute -top-1/3 -right-1/4 w-2/3 h-2/3 rounded-full bg-gradient-to-tl from-indigo-900/30 via-transparent to-transparent opacity-50 blur-3xl transform-gpu"></div>
       </div>
       
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
-        <ScrollReveal animation="fade-in">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center justify-center px-4 py-1.5 space-x-2 rounded-full bg-purple-950/50 border border-purple-800/30 text-xs font-medium uppercase tracking-wider text-purple-400">
-              <span className="flex h-2 w-2 rounded-full bg-purple-500"></span>
-              <span>How It Works</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mt-6 mb-4 tracking-tight">
-              Getting Started with <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-400">
-                Our AI Scheduling Assistant
-              </span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              See how easy it is to streamline your lead generation and boost your 
-              sales productivity with just a few simple steps
-            </p>
-          </div>
-        </ScrollReveal>
+        <motion.div className="text-center mb-20" variants={staggerContainer(0.2)}>
+          <motion.div 
+            className="inline-flex items-center justify-center px-5 py-2 space-x-2.5 rounded-full bg-blue-950/70 border border-blue-700/50 text-xs font-medium uppercase tracking-wider text-blue-300 shadow-md mb-6"
+            variants={fadeInFromBottom(0)}
+            // whileHover={{ y: -3, scale: 1.05, transition: {type: "spring", stiffness:300}}}
+          >
+            <motion.span 
+              className="flex h-2.5 w-2.5 rounded-full bg-blue-500"
+              // animate={{ scale: [1, 1.3, 1], transition: {duration: 1.5, repeat: Infinity}}}
+            />
+            <span>How It Works</span>
+          </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {steps.map((step, index) => (
-            <ScrollReveal 
-              key={index} 
-              animation={index % 2 === 0 ? "fade-in" : "fade-in"}
-              delay={index * 100}
+          <motion.h2 
+            className="text-4xl md:text-6xl font-bold mt-6 mb-5 tracking-tight text-white leading-tight" // Adjusted leading
+            variants={fadeInFromBottom(0.1)}
+          >
+            Getting Started with <br />
+            <motion.span 
+              className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-500"
+              style={{ backgroundSize: "200% auto" }} // For gradient animation
+              variants={gradientTextVariants} // Apply shimmer
+              initial="initial" // Start position for shimmer
+              animate="animate"   // Animate to end position for shimmer
             >
-              <Card className={`relative overflow-hidden rounded-xl bg-black/20 backdrop-blur-sm border border-white/10 shadow-xl ${activeStep === index ? 'ring-2 ring-purple-500/50' : ''} h-full flex flex-col`}>
-                <AspectRatio ratio={16/14} className="relative overflow-hidden">
-                  <div className="absolute inset-0 p-6">
-                    {step.content}
-                  </div>
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-500/30 to-transparent"></div>
+              Our AI Scheduling Assistant
+            </motion.span>
+          </motion.h2>
+          <motion.p 
+            className="text-white/70 text-lg md:text-xl max-w-3xl mx-auto" // Increased font size and max-width
+            variants={fadeInFromBottom(0.2)}
+          >
+            See how easily you can streamline lead generation and boost sales productivity with just a few simple, intuitive steps.
+          </motion.p>
+        </motion.div>
+
+        <motion.div 
+          className="grid grid-cols-1 lg:grid-cols-3 gap-10 xl:gap-12" // Increased gap
+          variants={staggerContainer(0.2, 0.5)} // Stagger cards, delay after header
+        >
+          {steps.map((step, index) => (
+            <motion.div
+              key={index}
+              variants={fadeInFromBottom(index * 0.15, 0.6)} // Staggered entrance for each card
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              <Card className={`relative overflow-hidden rounded-2xl bg-gradient-to-br from-black/30 to-black/50 backdrop-blur-md border border-white/10 shadow-2xl h-full flex flex-col transition-all duration-300 group`}>
+                {/* Animated Decorative Line */}
+                <motion.div 
+                  className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-70 group-hover:opacity-100"
+                  initial={{ scaleX: 0, originX: 0.5 }}
+                  whileInView={{ scaleX: 1, transition: { duration: 0.8, delay: 0.3 + index * 0.1, ease: "circOut" } }}
+                  viewport={{ once: true }}
+                />
+                
+                <AspectRatio ratio={16/14} className="relative overflow-hidden rounded-t-2xl">
+                  <motion.div 
+                    className="absolute inset-0 p-1" // Reduced padding to allow content's own padding to shine
+                    initial="hidden"
+                    whileInView="visible" // Trigger content animation when card is in view
+                    viewport={{ once: true, amount: 0.4 }} // Content animates when 40% visible
+                    variants={staggerContainer(0.1, 0.5)} // Delay content animation slightly
+                  >
+                    {step.content(motion)} 
+                  </motion.div>
                 </AspectRatio>
-                <div className="p-6">
-                  <div className="text-xs font-semibold text-purple-400 mb-2">{step.step}</div>
-                  <h3 className="text-xl font-bold mb-2 text-white">{step.title}</h3>
-                  <p className="text-white/70">{step.description}</p>
-                </div>
+                
+                <motion.div 
+                  className="p-6 md:p-8 flex-grow flex flex-col" // Increased padding
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  variants={staggerContainer(0.1, 0.2)} // Stagger text content
+                >
+                  <motion.div className="flex items-center mb-4" variants={fadeInFromBottom()}>
+                    <motion.div 
+                      className="mr-4 p-2 bg-blue-900/50 rounded-lg border border-blue-700/60 shadow-lg"
+                      whileHover={{scale:1.1, rotate: -5, transition: {type:"spring", stiffness:300}}}
+                      variants={scaleIn(0.1)}
+                    >
+                      {step.icon}
+                    </motion.div>
+                    <div>
+                      <motion.div className="text-xs font-semibold text-blue-400 uppercase tracking-wider mb-1" variants={fadeInFromBottom(0.05)}>{step.step}</motion.div>
+                      <motion.h3 className="text-xl md:text-2xl font-bold text-white" variants={fadeInFromBottom(0.1)}>{step.title}</motion.h3>
+                    </div>
+                  </motion.div>
+                  <motion.p className="text-white/70 text-sm md:text-base flex-grow" variants={fadeInFromBottom(0.15)}>{step.description}</motion.p>
+                   <motion.div 
+                      className="mt-6 self-start"
+                      variants={fadeInFromBottom(0.2)}
+                    >
+                        <button className="text-sm text-blue-300 hover:text-blue-100 font-medium group/button relative">
+                            Learn More
+                            <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover/button:w-full"></span>
+                        </button>
+                    </motion.div>
+                </motion.div>
+                
+                {/* Enhanced Hover Glow Effect */}
+                <motion.div 
+                    className="absolute inset-0 rounded-2xl border-2 border-transparent transition-colors duration-300 pointer-events-none"
+                    whileHover={{ 
+                        borderColor: "rgba(59, 130, 246, 0.5)", /* blue-500 with opacity */
+                        boxShadow: "0 0 25px rgba(59, 130, 246, 0.4), 0 0 10px rgba(59, 130, 246, 0.3) inset",
+                        transition: { duration: 0.3 }
+                    }}
+                />
               </Card>
-            </ScrollReveal>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
