@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { BarChart3, CheckCircle } from "lucide-react"; // CheckCircle for potential use, LineChart removed as unused
+import { BarChart3, CheckCircle } from "lucide-react"; 
 import { Card } from "@/components/ui/card";
 import { motion, Variants, useInView, useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect, useRef } from "react";
@@ -16,7 +16,7 @@ function useAnimatedCounter(targetValue: number, duration: number = 1.5) {
     if (isInView) {
       const controls = animate(count, targetValue, {
         duration: duration,
-        ease: "circOut",
+        ease: "easeInOut", // Smoother ease function
       });
       return controls.stop;
     }
@@ -32,7 +32,7 @@ const HeroSection = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { duration: 0.5, staggerChildren: 0.1, delayChildren: 0.1 },
+      transition: { duration: 0.8, staggerChildren: 0.2, delayChildren: 0.2, ease: "easeInOut" }, // Smoother transition
     },
   };
 
@@ -46,10 +46,11 @@ const HeroSection = () => {
       scale: 1,
       transition: {
         type: "spring",
-        damping: 20,
-        stiffness: 100,
+        damping: 18, // Reduced damping for smoother transition
+        stiffness: 80, // Reduced stiffness for smoother easing
         delay,
         duration: 0.8,
+        ease: "easeInOut", // Smooth easing
       },
     }),
   });
@@ -65,8 +66,9 @@ const HeroSection = () => {
         type: "spring",
         damping: 15,
         stiffness: 100,
-        delay: i * 0.07, // Stagger each word
+        delay: i * 0.1, // Adjusted stagger delay for smoother flow
         duration: 0.8,
+        ease: "easeInOut", // Smooth easing
       },
     }),
   };
@@ -76,7 +78,7 @@ const HeroSection = () => {
     visible: (delay: number = 0) => ({
       width: "100%",
       opacity: 1,
-      transition: { duration: 0.9, ease: [0.25, 1, 0.5, 1], delay }, // Smoother ease
+      transition: { duration: 1, ease: "easeInOut", delay },
     }),
   };
 
@@ -86,7 +88,7 @@ const HeroSection = () => {
       pathLength: 1,
       opacity: 1,
       pathOffset: 0,
-      transition: { duration: 1.2, ease: "circOut", delay },
+      transition: { duration: 1.5, ease: "easeInOut", delay },
     }),
   };
   
@@ -95,7 +97,7 @@ const HeroSection = () => {
     visible: (delay: number = 0) => ({
       opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: "circOut", delay },
+      transition: { duration: 0.8, ease: "easeInOut", delay }, // Smoothed out transition
     }),
   };
 
@@ -104,13 +106,13 @@ const HeroSection = () => {
     visible: (delay: number = 0) => ({
       opacity: 1,
       y: 0,
-      transition: { type: "spring", damping: 18, stiffness: 80, delay, duration: 0.7, staggerChildren: 0.15 },
+      transition: { type: "spring", damping: 18, stiffness: 80, delay, duration: 1, staggerChildren: 0.15 },
     }),
   };
 
   const bottomItemVariants: Variants = {
     hidden: { opacity: 0, scale: 0.8, y: 20 },
-    visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", damping: 12, stiffness: 100 } },
+    visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", damping: 12, stiffness: 100, ease: "easeInOut" } },
   };
 
   // Data for headline animation
@@ -120,7 +122,7 @@ const HeroSection = () => {
   // Counters for widgets
   const leadGenAmount = useAnimatedCounter(2890);
   const memberGrowth = useAnimatedCounter(75);
-  const totalRevenueAmount = useAnimatedCounter(600.32, 1.5); // Target for 4.32k, might need formatting
+  const totalRevenueAmount = useAnimatedCounter(600.32, 1.5); 
   const balanceAmount = useAnimatedCounter(60124);
 
   // Line chart animation
@@ -130,7 +132,7 @@ const HeroSection = () => {
   return (
     <motion.section
       id="hero"
-      className="pt-20 pb-16 md:pt-10 md:pb-10 relative overflow-hidden bg-gray-950 text-white" // Dark theme
+      className="py-20  relative overflow-hidden bg-gray-950 text-white" 
       variants={sectionOverallVariants}
       initial="hidden"
       whileInView="visible"
@@ -167,20 +169,19 @@ const HeroSection = () => {
       />
 
       <div className="container relative z-10 px-4 md:px-6">
-        <div className="text-center mb-12"> {/* Increased margin */}
-          {/* Placeholder for trust badge - can be animated */}
+        <div className="text-center mb-12">
+          {/* Placeholder for trust badge */}
         </div>
 
-        <div className="flex lg:flex-row flex-col items-center gap-12 lg:gap-8 relative py-10"> {/* Increased gap for mobile */}
+        <div className="flex lg:flex-row flex-col items-center gap-12 lg:gap-8 relative py-10">
           {/* Left dashboard widget */}
           <motion.div
-            className="w-full md:w-1/3 lg:w-1/4 xl:w-1/5" // Adjusted responsive width
+            className="w-full md:w-1/3 lg:w-1/4 xl:w-1/5"
             variants={widgetVariants("left")}
-            custom={0.2} // delay passed to variant
-            // initial, whileInView, viewport handled by parent sectionOverallVariants
+            custom={0.2}
           >
-            <Card className="glass-effect-strong overflow-hidden shadow-2xl shadow-blue-500/10 border border-white/10"> {/* Stronger glass */}
-              <div className="p-5"> {/* Increased padding */}
+            <Card className="glass-effect-strong overflow-hidden shadow-2xl shadow-blue-500/10 border border-white/10">
+              <div className="p-5">
                 <div className="mb-3 flex justify-between items-center">
                   <h5 className="text-sm font-semibold text-white/90">Lead Generation</h5>
                   <span className="text-blue-400">
@@ -194,7 +195,7 @@ const HeroSection = () => {
                     $<motion.span>{leadGenAmount.displayValue}</motion.span>
                   </span>
                 </div>
-                <div className="h-24 w-full" ref={lineChartPathRef}> {/* Increased height */}
+                <div className="h-24 w-full" ref={lineChartPathRef}>
                   <svg viewBox="0 0 100 40" width="100%" height="100%" preserveAspectRatio="none">
                     <defs>
                       <linearGradient id="heroChartGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -209,11 +210,11 @@ const HeroSection = () => {
                       strokeWidth="2.5" 
                       initial={{ pathLength: 0, opacity: 0 }}
                       animate={isLineChartInView ? { pathLength: 1, opacity: 1 } : {}}
-                      transition={{ duration: 2, ease: "circOut", delay: 0.5 }}
+                      transition={{ duration: 2, ease: "easeInOut", delay: 0.5 }}
                     />
                   </svg>
                 </div>
-                <div className="grid grid-cols-7 gap-1.5 mt-3"> {/* Increased gap/margin */}
+                <div className="grid grid-cols-7 gap-1.5 mt-3">
                   {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => <div key={i} className="text-xs text-center text-white/60">{day}</div>)}
                 </div>
               </div>
@@ -232,96 +233,103 @@ const HeroSection = () => {
               </div>
             </Card>
           </motion.div>
+          
 
           {/* Main content */}
-        {/* Main content */}
-<div className="flex-1 text-center space-y-8 max-w-3xl mx-auto py-8 lg:py-0"> {/* Increased spacing */}
-  <motion.h1
-    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-white" // Reduced font size, changed tracking
-    initial="hidden"
-    whileInView="visible"
-    viewport={{ once: true, amount: 0.2 }}
-    variants={{ visible: { transition: { staggerChildren: 0.05 } } }} // Stagger for words
-  >
-    {words.map((word, i) => (
-      // Use React.Fragment to handle the word and the following space correctly
-      <React.Fragment key={`${word}-${i}`}>
-        <motion.span className="inline-block" variants={headlineWordVariants} custom={i}>
-          {word === "AI-Agent" ? (
-            <motion.span
-              className="inline-block relative overflow-hidden whitespace-nowrap" // Added whitespace-nowrap
-              variants={{
-                hidden: {width:0},
-                visible: (delay=0) => ({width: "auto", transition:{duration:0.01, delay}})
-              }}
-              custom={ (words.indexOf("AI-Agent") * 0.07) + 0.4}
+          <div className="flex-1 text-center space-y-8 max-w-3xl mx-auto py-8 lg:py-0">
+            <motion.h1
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-white"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
             >
-               <motion.span 
-                  className="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 -skew-y-2 scale-110" // Stylish highlight
-                  variants={textHighlightVariants}
-                  custom={ (words.indexOf("AI-Agent") * 0.07) + 0.5}
-               />
-               {/* px-2 adds space around "AI-Agent" within its highlight */}
-               <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-300 px-2">{word}</span>
-            </motion.span>
-          ) : word === "Generation" ? (
-            <span className="relative inline-block whitespace-nowrap"> {/* Added whitespace-nowrap */}
-              {word}
-              <motion.svg
-                className="absolute -bottom-3 left-0 w-full h-3"
-                viewBox="0 0 138 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                variants={svgUnderlineVariants}
-                custom={ (words.length * 0.07) + 0.3 }
-              >
-                <motion.path
-                  d="M2 7.5C30.1613 3.5698 80 -1.08932 136 5.90112"
-                  stroke="url(#underlineGradient)"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-                <defs>
-                    <linearGradient id="underlineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#60a5fa" /> 
-                        <stop offset="100%" stopColor="#c084fc" />
-                    </linearGradient>
-                </defs>
-              </motion.svg>
-            </span>
-          ) : (
-            // Render just the word, space will be handled outside this span
-            word 
-          )}
-        </motion.span>
-        {/* Add an explicit space character if it's not the last word */}
-        {i < words.length - 1 && ' '}
-      </React.Fragment>
-    ))}
-  </motion.h1>
-  
-  <motion.p
-    className="text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl mx-auto" // text-muted-foreground changed to text-white/70 for dark theme
-    variants={paragraphVariants}
-    custom={ (words.length * 0.07) + 0.2 } // Delay after heading
+              {words.map((word, i) => (
+                <React.Fragment key={`${word}-${i}`}>
+                  <motion.span className="inline-block" variants={headlineWordVariants} custom={i}>
+                    {word === "AI-Agent" ? (
+                      <motion.span
+                        className="inline-block relative overflow-hidden whitespace-nowrap"
+                        variants={{
+                          hidden: {width:0},
+                          visible: (delay=0) => ({width: "auto", transition:{duration:0.01, delay}})
+                        }}
+                        custom={ (words.indexOf("AI-Agent") * 0.07) + 0.4}
+                      >
+                         <motion.span 
+                            className="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 -skew-y-2 scale-110"
+                            variants={textHighlightVariants}
+                            custom={ (words.indexOf("AI-Agent") * 0.07) + 0.5}
+                         />
+                         <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-300 px-2">{word}</span>
+                      </motion.span>
+                    ) : word === "Generation" ? (
+                      <span className="relative inline-block whitespace-nowrap">
+                        {word}
+                        <motion.svg
+                          className="absolute -bottom-3 left-0 w-full h-3"
+                          viewBox="0 0 138 10"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          variants={svgUnderlineVariants}
+                          custom={ (words.length * 0.07) + 0.3 }
+                        >
+                          <motion.path
+                            d="M2 7.5C30.1613 3.5698 80 -1.08932 136 5.90112"
+                            stroke="url(#underlineGradient)"
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                          />
+                          <defs>
+                              <linearGradient id="underlineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                  <stop offset="0%" stopColor="#60a5fa" /> 
+                                  <stop offset="100%" stopColor="#c084fc" />
+                              </linearGradient>
+                          </defs>
+                        </motion.svg>
+                      </span>
+                    ) : (
+                      word
+                    )}
+                  </motion.span>
+                  {i < words.length - 1 && ' '}
+                </React.Fragment>
+              ))}
+            </motion.h1>
+            
+            <motion.p
+              className="text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl mx-auto"
+              variants={paragraphVariants}
+              custom={ (words.length * 0.07) + 0.2 }
+            >
+              Transform enterprise communication with autonomous AI agents that deliver personalized conversations and comprehensive analytics at unprecedented scale.
+            </motion.p>
+            <motion.div 
+  initial={{ opacity: 0, scale: 0.95 }} 
+  animate={{ opacity: 1, scale: 1 }} 
+  transition={{ duration: 0.3, ease: "easeInOut" }}
+>
+  <Button 
+    className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-3 px-6 rounded-md shadow-lg hover:scale-105 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform"
   >
-    Transform enterprise communication with autonomous AI agents that deliver personalized conversations and comprehensive analytics at unprecedented scale.
-  </motion.p>
-</div>
+    Get Started
+  </Button>
+</motion.div>
+
+          </div>
 
           {/* Right dashboard widget */}
           <motion.div
-            className="w-full md:w-1/3 lg:w-1/4 xl:w-1/5" // Adjusted responsive width
+            className="w-full md:w-1/3 lg:w-1/4 xl:w-1/5"
             variants={widgetVariants("right")}
-            custom={0.4} // delay
+            custom={0.4}
           >
-            <Card className="glass-effect-strong overflow-hidden shadow-2xl shadow-purple-500/10 border border-white/10"> {/* Stronger glass */}
-              <div className="p-5"> {/* Increased padding */}
+            <Card className="glass-effect-strong overflow-hidden shadow-2xl shadow-purple-500/10 border border-white/10">
+              <div className="p-5">
                 <div className="flex items-center justify-between mb-3">
                   <h5 className="text-sm font-semibold text-white/90">Total Revenue</h5>
-                  {/* Optional icon here */}
                 </div>
-                <div className="flex items-center gap-4 mb-6"> {/* Increased gap */}
+                <div className="flex items-center gap-4 mb-6">
                   <div className="h-10 w-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -329,9 +337,9 @@ const HeroSection = () => {
                     </svg>
                   </div>
                   <div ref={totalRevenueAmount.ref}>
-                  <motion.span className="text-3xl font-bold text-white"> 
-                    $<motion.span>{totalRevenueAmount.displayValue}</motion.span>k 
-                  </motion.span>
+                    <motion.span className="text-3xl font-bold text-white">
+                      $<motion.span>{totalRevenueAmount.displayValue}</motion.span>k
+                    </motion.span>
                   </div>
                 </div>
               </div>
@@ -345,48 +353,22 @@ const HeroSection = () => {
                     $<motion.span>{balanceAmount.displayValue}</motion.span>
                   </div>
                   <div className="flex items-center">
-                    <div className="flex-1 bg-white/10 h-2.5 rounded-full overflow-hidden"> {/* Thicker bar */}
+                    <div className="flex-1 bg-white/10 h-2.5 rounded-full overflow-hidden">
                       <motion.div 
-                        className="bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full" 
+                        className="bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full"
                         initial={{width: 0}}
                         whileInView={{width: '75%'}}
                         viewport={{once: true, amount: 0.8}}
-                        transition={{duration: 1.5, ease: "circOut", delay: 0.5}}
+                        transition={{duration: 1.5, ease: "easeInOut", delay: 0.5}}
                       />
                     </div>
-                    <span className="text-xs ml-3 text-green-400 font-medium">Optimal</span> {/* Changed label */}
+                    <span className="text-xs ml-3 text-green-400 font-medium">Optimal</span>
                   </div>
                 </div>
               </div>
             </Card>
           </motion.div>
         </div>
-        
-        <motion.div
-          className="mt-28 pt-12 border-t border-white/10" // Increased margin/padding
-          variants={bottomSectionVariants}
-          custom={0.3} // delay
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 xl:gap-12"> {/* Increased gap */}
-            {[
-              { icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor"><path d="M21 16V7.2C21 6.0799 21 5.51984 20.782 5.09202C20.5903 4.7157 20.2843 4.40974 19.908 4.21799C19.4802 4 18.9201 4 17.8 4H6.2C5.0799 4 4.51984 4 4.09202 4.21799C3.7157 4.40973 3.40973 4.71569 3.21799 5.09202C3 5.51984 3 6.0799 3 7.2V16.8C3 17.9201 3 18.4802 3.21799 18.908C3.40973 19.2843 3.71569 19.5903 4.09202 19.782C4.51984 20 5.0799 20 6.2 20H17.8C18.9201 20 19.4802 20 19.908 19.782C20.2843 19.5903 20.5903 19.2843 20.782 18.908C21 18.4802 21 17.9201 21 16.8V16Z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><path d="M3.5 9H20.5M8 4V2M16 4V2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>, text: "Connect your lead sources or upload lists; our AI sales agents autonomously initiate personalized outreach.", widthClass: "w-20"},
-              { icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor"><path d="M21 12C21 16.9706 16.9706 21 12 21M21 12C21 7.02944 16.9706 3 12 3M21 12H3M12 21C7.02944 21 3 16.9706 3 12M12 21C13.6569 21 15 16.9706 15 12C15 7.02944 13.6569 3 12 3M12 21C10.3431 21 9 16.9706 9 12C9 7.02944 10.3431 3 12 3M3 12C3 7.02944 7.02944 3 12 3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>, text: "Deploy AI sales agents that engage prospects with natural, human-like conversations, ensuring 24/7 availability.", widthClass: "w-20"},
-              { icon: <BarChart3 size={28} className="text-white/80" />, text: "Monitor sales activities, track key performance indicators, and gain actionable insights through a comprehensive analytics dashboard.", widthClass: "w-20"}
-            ].map((item, index) => (
-              <motion.div className="flex items-center gap-5 p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors duration-300 shadow-lg" key={index} variants={bottomItemVariants}> {/* Increased gap, padding, rounded */}
-                <motion.div 
-                  className={`h-20 ${item.widthClass} rounded-full bg-gradient-to-br from-blue-600/70 to-indigo-600/70 p-3 flex items-center justify-center text-white shadow-xl shrink-0`} // Gradient, larger
-                  whileHover={{scale: 1.1, rotate: -5, transition: {type: "spring", stiffness: 300}}}
-                >
-                  {item.icon}
-                </motion.div>
-                <div>
-                  <p className="text-sm text-white/70 leading-relaxed">{item.text}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </motion.section>
   );

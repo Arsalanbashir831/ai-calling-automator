@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 // import ScrollReveal from "@/components/ScrollReveal"; // Replaced by Framer Motion
 import { motion, AnimatePresence } from "framer-motion";
-import { useRef, useState, useEffect } from "react"; // useEffect is not used here, but kept from original
+import { useRef, useState, useEffect } from "react";
 
 // Helper for staggering children
 const staggerContainer = (staggerChildren = 0.1, delayChildren = 0) => ({
@@ -17,34 +17,34 @@ const staggerContainer = (staggerChildren = 0.1, delayChildren = 0) => ({
   },
 });
 
-const fadeInFromBottom = (delay = 0, duration = 0.5) => ({
+const fadeInFromBottom = (delay = 0, duration = 0.8) => ({
   hidden: { y: 30, opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
     transition: {
       type: "spring",
-      damping: 15,
-      stiffness: 100,
+      damping: 20,  // Softer damping for smoother animation
+      stiffness: 80, // Reduced stiffness for a smoother effect
       duration,
       delay,
     },
   },
 });
 
-const fadeIn = (delay = 0, duration = 0.5) => ({
+const fadeIn = (delay = 0, duration = 0.8) => ({
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
       duration,
       delay,
-      ease: "easeInOut"
+      ease: "easeInOut", // Smooth easing function
     },
   },
 });
 
-const scaleIn = (delay = 0, duration = 0.4) => ({
+const scaleIn = (delay = 0, duration = 0.5) => ({
   hidden: { scale: 0.5, opacity: 0 },
   visible: {
     scale: 1,
@@ -52,14 +52,14 @@ const scaleIn = (delay = 0, duration = 0.4) => ({
     transition: {
       type: "spring",
       damping: 12,
-      stiffness: 100,
+      stiffness: 60, // Lower stiffness for a smoother scale-in
       delay,
       duration,
     },
   },
 });
 
-const drawLine = (delay = 0, duration = 0.8) => ({
+const drawLine = (delay = 0, duration = 1) => ({
   hidden: { pathLength: 0, opacity: 0 },
   visible: {
     pathLength: 1,
@@ -67,7 +67,7 @@ const drawLine = (delay = 0, duration = 0.8) => ({
     transition: {
       duration,
       delay,
-      ease: "circOut",
+      ease: "easeOut", // More fluid ease for the path drawing
     },
   },
 });
@@ -80,7 +80,7 @@ const HowItWorksSection = () => {
       step: "STEP 1",
       title: "Setup Your Account",
       description: "Provide your basic information and upload your leads database in CSV format to kickstart your journey.",
-      icon: <Upload className="w-8 h-8 text-blue-400" />, // Icon size increased
+      icon: <Upload className="w-8 h-8 text-blue-400" />,
       content: (motionInstance) => ( // Pass motion instance for dynamic content animation
         <motion.div 
           className="bg-black/50 backdrop-blur-xl p-6 rounded-xl border border-white/10 shadow-2xl"
@@ -195,34 +195,6 @@ const HowItWorksSection = () => {
 
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  // Animation for the gradient text shimmer
-  const gradientTextVariants = {
-    initial: { backgroundPosition: "200% center" },
-    animate: {
-      backgroundPosition: "-200% center",
-      transition: {
-        duration: 3, // Slower shimmer
-        repeat: Infinity,
-        ease: "linear",
-      },
-    },
-  };
-  
-  // Animation for the background radial gradient pulse
-  const bgPulseVariants = {
-    initial: { opacity: 0.05, scale: 1 },
-    animate: {
-      opacity: [0.05, 0.1, 0.05], // More subtle pulse
-      scale: [1, 1.05, 1], // Slight scale pulse
-      transition: {
-        duration: 8, // Slower pulse
-        repeat: Infinity,
-        ease: "easeInOut",
-      },
-    },
-  };
-
-
   return (
     <motion.section 
       id="how-it-works" 
@@ -237,13 +209,19 @@ const HowItWorksSection = () => {
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <motion.div 
           className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(33,150,243,0.1),transparent_70%)]"
-          variants={bgPulseVariants}
-          initial="initial"
-          animate="animate"
+          variants={{
+            initial: { opacity: 0.05 },
+            animate: {
+              opacity: [0.05, 0.1, 0.05], 
+              scale: [1, 1.05, 1], 
+              transition: {
+                duration: 6,
+                repeat: Infinity,
+                ease: "easeInOut",
+              },
+            },
+          }}
         />
-        {/* Optional: Add more subtle animated background shapes/particles here */}
-         <div className="absolute -bottom-1/3 -left-1/4 w-2/3 h-2/3 rounded-full bg-gradient-to-br from-blue-900/30 via-transparent to-transparent opacity-50 blur-3xl transform-gpu"></div>
-         <div className="absolute -top-1/3 -right-1/4 w-2/3 h-2/3 rounded-full bg-gradient-to-tl from-indigo-900/30 via-transparent to-transparent opacity-50 blur-3xl transform-gpu"></div>
       </div>
       
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
@@ -251,32 +229,40 @@ const HowItWorksSection = () => {
           <motion.div 
             className="inline-flex items-center justify-center px-5 py-2 space-x-2.5 rounded-full bg-blue-950/70 border border-blue-700/50 text-xs font-medium uppercase tracking-wider text-blue-300 shadow-md mb-6"
             variants={fadeInFromBottom(0)}
-            // whileHover={{ y: -3, scale: 1.05, transition: {type: "spring", stiffness:300}}}
           >
             <motion.span 
               className="flex h-2.5 w-2.5 rounded-full bg-blue-500"
-              // animate={{ scale: [1, 1.3, 1], transition: {duration: 1.5, repeat: Infinity}}}
             />
             <span>How It Works</span>
           </motion.div>
 
           <motion.h2 
-            className="text-4xl md:text-6xl font-bold mt-6 mb-5 tracking-tight text-white leading-tight" // Adjusted leading
+            className="text-4xl md:text-6xl font-bold mt-6 mb-5 tracking-tight text-white leading-tight" 
             variants={fadeInFromBottom(0.1)}
           >
             Getting Started with <br />
             <motion.span 
               className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-500"
-              style={{ backgroundSize: "200% auto" }} // For gradient animation
-              variants={gradientTextVariants} // Apply shimmer
-              initial="initial" // Start position for shimmer
-              animate="animate"   // Animate to end position for shimmer
+              style={{ backgroundSize: "200% auto" }}
+              variants={{
+                hidden: { backgroundPosition: "200% center" },
+                visible: { 
+                  backgroundPosition: "-200% center",
+                  transition: { 
+                    duration: 3, 
+                    repeat: Infinity,
+                    ease: "linear" 
+                  } 
+                },
+              }}
+              initial="hidden"
+              animate="visible"
             >
               Our AI Scheduling Assistant
             </motion.span>
           </motion.h2>
           <motion.p 
-            className="text-white/70 text-lg md:text-xl max-w-3xl mx-auto" // Increased font size and max-width
+            className="text-white/70 text-lg md:text-xl max-w-3xl mx-auto"
             variants={fadeInFromBottom(0.2)}
           >
             See how easily you can streamline lead generation and boost sales productivity with just a few simple, intuitive steps.
@@ -284,17 +270,16 @@ const HowItWorksSection = () => {
         </motion.div>
 
         <motion.div 
-          className="grid grid-cols-1 lg:grid-cols-3 gap-10 xl:gap-12" // Increased gap
-          variants={staggerContainer(0.2, 0.5)} // Stagger cards, delay after header
+          className="grid grid-cols-1 lg:grid-cols-3 gap-10 xl:gap-12"
+          variants={staggerContainer(0.2, 0.5)}
         >
           {steps.map((step, index) => (
             <motion.div
               key={index}
-              variants={fadeInFromBottom(index * 0.15, 0.6)} // Staggered entrance for each card
+              variants={fadeInFromBottom(index * 0.15, 0.6)}
               viewport={{ once: true, amount: 0.2 }}
             >
               <Card className={`relative overflow-hidden rounded-2xl bg-gradient-to-br from-black/30 to-black/50 backdrop-blur-md border border-white/10 shadow-2xl h-full flex flex-col transition-all duration-300 group`}>
-                {/* Animated Decorative Line */}
                 <motion.div 
                   className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-70 group-hover:opacity-100"
                   initial={{ scaleX: 0, originX: 0.5 }}
@@ -304,22 +289,22 @@ const HowItWorksSection = () => {
                 
                 <AspectRatio ratio={16/14} className="relative overflow-hidden rounded-t-2xl">
                   <motion.div 
-                    className="absolute inset-0 p-1" // Reduced padding to allow content's own padding to shine
+                    className="absolute inset-0 p-1"
                     initial="hidden"
-                    whileInView="visible" // Trigger content animation when card is in view
-                    viewport={{ once: true, amount: 0.4 }} // Content animates when 40% visible
-                    variants={staggerContainer(0.1, 0.5)} // Delay content animation slightly
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.4 }}
+                    variants={staggerContainer(0.1, 0.5)}
                   >
                     {step.content(motion)} 
                   </motion.div>
                 </AspectRatio>
                 
                 <motion.div 
-                  className="p-6 md:p-8 flex-grow flex flex-col" // Increased padding
+                  className="p-6 md:p-8 flex-grow flex flex-col"
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, amount: 0.3 }}
-                  variants={staggerContainer(0.1, 0.2)} // Stagger text content
+                  variants={staggerContainer(0.1, 0.2)}
                 >
                   <motion.div className="flex items-center mb-4" variants={fadeInFromBottom()}>
                     <motion.div 
@@ -346,11 +331,10 @@ const HowItWorksSection = () => {
                     </motion.div>
                 </motion.div>
                 
-                {/* Enhanced Hover Glow Effect */}
                 <motion.div 
                     className="absolute inset-0 rounded-2xl border-2 border-transparent transition-colors duration-300 pointer-events-none"
                     whileHover={{ 
-                        borderColor: "rgba(59, 130, 246, 0.5)", /* blue-500 with opacity */
+                        borderColor: "rgba(59, 130, 246, 0.5)",
                         boxShadow: "0 0 25px rgba(59, 130, 246, 0.4), 0 0 10px rgba(59, 130, 246, 0.3) inset",
                         transition: { duration: 0.3 }
                     }}
