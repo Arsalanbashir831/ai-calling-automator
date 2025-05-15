@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
-import DashboardTour from "@/components/dashboard/DashboardTour";
+import DashboardTutorial from "@/components/dashboard/DashboardTutorial";
 import StatsCard from "@/components/dashboard/StatsCard";
 import RecentCallsTable from "@/components/dashboard/RecentCallsTable";
 import { Button } from "@/components/ui/button";
@@ -127,6 +127,9 @@ const DashboardOverview = () => {
           <RecentCallsTable />
         </div>
       </div>
+
+      {/* Tutorial component */}
+      <DashboardTutorial />
     </>
   );
 };
@@ -155,9 +158,6 @@ const Dashboard = () => {
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </div>
-      
-      {/* Driver.js Tour */}
-      <DashboardTour />
     </div>
   );
 };
