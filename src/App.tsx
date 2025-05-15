@@ -9,6 +9,9 @@ import NotFound from "./pages/NotFound";
 import Features from "./pages/Features";
 import Pricing from "./pages/Pricing";
 import HelpCenter from "./pages/Help-Center";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
 
 import { useEffect } from "react";
 import Header from "./components/Header";
@@ -37,19 +40,56 @@ const App = () => {
         <Toaster />
         <Sonner theme="dark" className="dark" />
         <BrowserRouter>
-          <div className="dark bg-background text-foreground min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-grow">
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/features" element={<Features />} />
-                <Route path="/pricing" element={<Pricing />} />
-                <Route path="/help-center" element={<HelpCenter />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/dashboard/*" element={<Dashboard />} />
+            <Route path="/" element={
+              <div className="dark bg-background text-foreground min-h-screen flex flex-col">
+                <Header />
+                <main className="flex-grow">
+                  <Index />
+                </main>
+                <Footer />
+              </div>
+            } />
+            <Route path="/features" element={
+              <div className="dark bg-background text-foreground min-h-screen flex flex-col">
+                <Header />
+                <main className="flex-grow">
+                  <Features />
+                </main>
+                <Footer />
+              </div>
+            } />
+            <Route path="/pricing" element={
+              <div className="dark bg-background text-foreground min-h-screen flex flex-col">
+                <Header />
+                <main className="flex-grow">
+                  <Pricing />
+                </main>
+                <Footer />
+              </div>
+            } />
+            <Route path="/help-center" element={
+              <div className="dark bg-background text-foreground min-h-screen flex flex-col">
+                <Header />
+                <main className="flex-grow">
+                  <HelpCenter />
+                </main>
+                <Footer />
+              </div>
+            } />
+            <Route path="*" element={
+              <div className="dark bg-background text-foreground min-h-screen flex flex-col">
+                <Header />
+                <main className="flex-grow">
+                  <NotFound />
+                </main>
+                <Footer />
+              </div>
+            } />
+          </Routes>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

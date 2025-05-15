@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"; 
 import { Menu, X } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -98,9 +98,16 @@ const Header = () => {
                 </div>
                 
                 <div className="mt-auto p-4 border-t border-white/10">
-                  <Button className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-md shadow-blue-500/10">
-                    Get Started
-                  </Button>
+                  <Link to="/login">
+                    <Button className="w-full mb-3 bg-transparent border border-primary/50 hover:bg-primary/10 text-white">
+                      Sign In
+                    </Button>
+                  </Link>
+                  <Link to="/signup">
+                    <Button className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-md shadow-blue-500/10">
+                      Get Started
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </SheetContent>
@@ -109,9 +116,16 @@ const Header = () => {
 
         {/* Get Started Button - Only visible on desktop */}
         <div className="hidden md:flex items-center gap-5">
-          <Button className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-md shadow-blue-500/10">
-            Get Started
-          </Button>
+          <Link to="/login">
+            <Button variant="ghost" className="hover:bg-primary/10">
+              Sign In
+            </Button>
+          </Link>
+          <Link to="/signup">
+            <Button className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-md shadow-blue-500/10">
+              Get Started
+            </Button>
+          </Link>
         </div>
       </div>
     </header>
