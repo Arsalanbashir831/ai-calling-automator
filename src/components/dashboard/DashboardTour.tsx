@@ -1,7 +1,8 @@
 
 import React, { useEffect, useState } from 'react';
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { driver as driverjs } from 'driver.js';
+import { X } from "lucide-react";
 import 'driver.js/dist/driver.css';
 
 const DashboardTour = () => {
@@ -19,7 +20,7 @@ const DashboardTour = () => {
   }, []);
 
   const startTour = () => {
-    // Create and customize driver.js
+    // Create and customize driver.js with theme colors
     const driverObj = driverjs({
       showProgress: true,
       animate: true,
@@ -131,11 +132,99 @@ const DashboardTour = () => {
       },
       onDestroyed: () => {
         localStorage.setItem('dashboardTourCompleted', 'true');
+      },
+      // Use popoverClass instead of className for styling the popover
+      popoverClass: 'dashboard-tour-popover',
+      overlayColor: 'rgba(0, 0, 0, 0.5)',
+      padding: 5,
+    });
+
+    // Add CSS to style the driver.js overlay and popover to match the theme
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+      .driver-popover {
+        background: hsl(var(--card)) !important;
+        border: 1px solid hsl(var(--border)) !important;
+        color: hsl(var(--card-foreground)) !important;
+      }
+      
+      .driver-popover-title {
+        color: hsl(var(--primary)) !important;
+        font-weight: bold !important;
+      }
+      
+      .driver-popover-description {
+        color: hsl(var(--card-foreground)) !important;
+      }
+      
+      .driver-popover-footer button {
+        background: hsl(var(--primary)) !important;
+        color: hsl(var(--primary-foreground)) !important;
+      }
+      
+      .driver-popover-footer button.driver-prev-btn {
+        background: hsl(var(--muted)) !important;
+        color: hsl(var(--muted-foreground)) !important;
+      }
+      
+      .driver-popover-footer button.driver-close-btn {
+        background: hsl(var(--muted)) !important;
+        color: hsl(var(--muted-foreground)) !important;
+      }
+      
+      .driver-popover-footer button:hover {
+        background: hsl(var(--primary)/90%) !important;
+      }
+      
+      .driver-popover-footer button.driver-prev-btn:hover,
+      .driver-popover-footer button.driver-close-btn:hover {
+        background: hsl(var(--muted)/80%) !important;
+      }
+      
+      .driver-popover-navigation-btns {
+        display: flex;
+        gap: 8px;
+      }
+      
+      /* Add skip button specific style */
+      .driver-popover-footer .driver-close-btn {
+        margin-right: auto;
+      }
+    `;
+    document.head.appendChild(styleElement);
+
+    // Add a skip button option
+    const skipButtonElement = document.createElement('button');
+    skipButtonElement.className = 'driver-close-btn';
+    skipButtonElement.innerHTML = '<span>Skip Tour</span>';
+    skipButtonElement.addEventListener('click', () => {
+      if (window.confirm('Are you sure you want to skip the tour? You can restart it anytime from the help icon.')) {
+        localStorage.setItem('dashboardTourCompleted', 'true');
+        toast({
+          title: "Tour skipped",
+          description: "You can restart the tour anytime using the help button in the header.",
+        });
+        driverObj.destroy();
       }
     });
 
     // Start the tour
     driverObj.drive();
+
+    // After tour has started, insert the skip button into the popover footer
+    setTimeout(() => {
+      const popoverFooter = document.querySelector('.driver-popover-footer');
+      if (popoverFooter) {
+        const navigationBtns = document.querySelector('.driver-popover-navigation-btns');
+        if (navigationBtns) {
+          popoverFooter.insertBefore(skipButtonElement, navigationBtns);
+        }
+      }
+    }, 500);
+
+    return () => {
+      document.head.removeChild(styleElement);
+    };
   };
 
   return null; // This component doesn't render anything visible
