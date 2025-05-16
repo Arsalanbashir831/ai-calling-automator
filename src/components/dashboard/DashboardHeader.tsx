@@ -19,11 +19,11 @@ const DashboardHeader = () => {
     localStorage.removeItem("dashboardTourCompleted");
     toast({
       title: "Tour restarted",
-      description: "The tour will begin in a moment.",
+      description: "Refresh the page to see the tour again.",
     });
     setTimeout(() => {
       window.location.reload();
-    }, 1000);
+    }, 1500);
   };
 
   return (
@@ -40,10 +40,9 @@ const DashboardHeader = () => {
           <Button 
             variant="ghost" 
             size="icon" 
-            className={`rounded-full ${!tutorialCompleted ? 'ring-2 ring-primary animate-pulse' : ''}`}
+            className="rounded-full"
             onClick={restartTutorial}
             id="help-button"
-            title="Restart Tour"
           >
             <HelpCircle className="h-5 w-5" />
             <span className="sr-only">Help</span>
