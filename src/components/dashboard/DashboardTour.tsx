@@ -133,9 +133,10 @@ const DashboardTour = () => {
       onDestroyed: () => {
         localStorage.setItem('dashboardTourCompleted', 'true');
       },
-      className: 'dashboard-tour-driver', // Custom class for styling
-      stagePadding: 5,
-      popoverClass: 'dashboard-tour-popover', // Custom class for popover styling
+      // Use popoverClass instead of className for styling the popover
+      popoverClass: 'dashboard-tour-popover',
+      overlayColor: 'rgba(0, 0, 0, 0.5)',
+      padding: 5,
     });
 
     // Add CSS to style the driver.js overlay and popover to match the theme
