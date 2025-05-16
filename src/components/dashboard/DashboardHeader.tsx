@@ -11,15 +11,15 @@ const DashboardHeader = () => {
 
   useEffect(() => {
     // Check if tutorial has been completed
-    const completed = localStorage.getItem("dashboardTutorialComplete");
+    const completed = localStorage.getItem("dashboardTourCompleted");
     setTutorialCompleted(!!completed);
   }, []);
 
   const restartTutorial = () => {
-    localStorage.removeItem("dashboardTutorialComplete");
+    localStorage.removeItem("dashboardTourCompleted");
     toast({
-      title: "Tutorial restarted",
-      description: "Refresh the page to see the tutorial again.",
+      title: "Tour restarted",
+      description: "Refresh the page to see the tour again.",
     });
     setTimeout(() => {
       window.location.reload();
@@ -42,12 +42,13 @@ const DashboardHeader = () => {
             size="icon" 
             className="rounded-full"
             onClick={restartTutorial}
+            id="help-button"
           >
             <HelpCircle className="h-5 w-5" />
             <span className="sr-only">Help</span>
           </Button>
           
-          <Button variant="ghost" size="icon" className="rounded-full">
+          <Button variant="ghost" size="icon" className="rounded-full" id="notification-bell">
             <Bell className="h-5 w-5" />
             <span className="sr-only">Notifications</span>
           </Button>

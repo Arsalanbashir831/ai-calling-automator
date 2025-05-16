@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
-import DashboardTutorial from "@/components/dashboard/DashboardTutorial";
+import DashboardTour from "@/components/dashboard/DashboardTour";
 import StatsCard from "@/components/dashboard/StatsCard";
 import RecentCallsTable from "@/components/dashboard/RecentCallsTable";
 import { Button } from "@/components/ui/button";
@@ -26,7 +26,7 @@ const DashboardOverview = () => {
 
   return (
     <>
-      <div className="p-6 overflow-auto">
+      <div className="p-6 overflow-auto" id="dashboard-main">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
@@ -73,7 +73,7 @@ const DashboardOverview = () => {
         </div>
         
         <div className="grid gap-6 md:grid-cols-7 mb-6">
-          <Card className="md:col-span-4">
+          <Card className="md:col-span-4" id="call-performance-chart">
             <CardHeader>
               <CardTitle>Call Performance</CardTitle>
               <CardDescription>Your recent calling activity</CardDescription>
@@ -85,7 +85,7 @@ const DashboardOverview = () => {
             </CardContent>
           </Card>
           
-          <Card className="md:col-span-3">
+          <Card className="md:col-span-3" id="monthly-usage">
             <CardHeader>
               <CardTitle>Monthly Usage</CardTitle>
               <CardDescription>Your plan limits and current usage</CardDescription>
@@ -128,8 +128,8 @@ const DashboardOverview = () => {
         </div>
       </div>
 
-      {/* Tutorial component */}
-      <DashboardTutorial />
+      {/* Add DashboardTour component */}
+      <DashboardTour />
     </>
   );
 };
